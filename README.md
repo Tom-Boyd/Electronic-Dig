@@ -3,7 +3,7 @@
 ## Git Commands
 
 ### To update
-git status    < shows unupdated stuff >
+git status    < shows unupdated stuff > <br />
 git add .     < update all >
 git commit -m "added prototype files"    < message on git >
 git push origin master      < send to github >
