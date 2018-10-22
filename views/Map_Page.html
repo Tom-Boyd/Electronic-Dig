@@ -1,0 +1,132 @@
+<!DOCTYPE html lang="en">
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Electronic Dig</title>
+	<link rel="stylesheet" href="Styles.css">
+</head>
+
+<body>
+	<script src="Scripts.js"></script>
+	<nav>
+		<ul>
+			<li><a href="https://rla.unc.edu/dig/">Main Menu</a></li>
+			<li><h1>Occaneechi Town Electronic Dig</h1></li>
+			<li style="float:right;margin-right:16px;">Budget: $20,000</li>
+			<li class="dropdown">
+		    <a class="dropbtn">&#9776; Help</i>
+		    </a>
+		    <div class="dropdown-content">
+				<a>Tutorial</a>
+				<a>Primer</a>
+				<a>Print</a>
+				<a>Export</a>
+		    </div>
+		  </li>
+		</ul>
+	</nav>
+
+	<main>
+		<div id="map">
+			<h1>Map</h1>
+			<div id="mapGrid"></div>
+			<div id="sidebar">
+				<div class="buttons" onclick="excavateSquare()">Excavate</div>
+				<div class="buttons" onclick="deselect()">Deselect</div>
+				<div class="buttons" onclick="random()">Random</div>
+                <a class="buttons" href="HomePage.html"><div>Reset</div></a>
+			</div>
+		</div>
+		<div id="square">
+			<h1>Square No.</h1>
+			<div class="block" onclick="viewFeature()"></div>
+			<div id="sidebar">
+				<div class="buttons" onclick="viewMap()">Map</div>
+				<h4>Type:</h4>
+				<h4>Dimensions:</h4>
+				<h4>Volume:</h4>
+				<h4>Area:</h4>
+			</div>
+			<div id="desc">
+				<h2>Description</h2>
+			</div>
+		</div>
+		<div id="feature">
+			<h1>Feature No.</h1>
+			<div class="block" onclick="viewFeature()"></div>
+			<div id="sidebar">
+				<div class="buttons" onclick="viewMap()">Map</div>
+				<div class="buttons" onclick="viewSquare()">Square</div>
+				<h4>Type:</h4>
+				<h4>Dimensions:</h4>
+				<h4>Volume:</h4>
+				<h4>Area:</h4>
+			</div>
+			<div id="desc">
+				<h2>Description</h2>
+			</div>
+		</div>
+	</main>
+		<div id="artifacts">
+			<h1>Artifacts</h1>
+			<div class="contextTable">
+				<table style="width:100%">
+				  <tr>
+					<th>Context</th>
+					<th>Entries</th>
+					<th>Photo</th>
+				  </tr>
+				  <tr style="background-color: #c6c6c6">
+					<td>Zone 1</td>
+					<td>2</td>
+					<td>X</td>
+				  </tr>
+				  <tr>
+					<td>Posthole #1</td>
+					<td>1</td>
+					<td>Y</td>
+				  </tr>
+				</table>
+			</div>
+			<div class="artifactTable">
+				<table style="width:100%">
+				  <tr>
+					<th>Cat No.</th>
+					<th>Count</th>
+					<th>Artifacts</th>
+					<th>Size</th>
+					<th>Photo</th>
+					<th>More</th>
+				  </tr>
+				  <tr>
+					<td>Light Fraction</td>
+					<td></td>
+					<td>1 bag</td>
+					<td>2351w2758</td>
+					<td></td>
+					<td>=></td>
+				  </tr>
+				  <tr>
+					<td>Potsherd</td>
+					<td>1/4"</td>
+					<td>1</td>
+					<td>2351w2756</td>
+					<td></td>
+					<td></td>
+				  </tr>
+				</table>
+			</div>
+		</div>
+	<script>
+	x="";
+	for(i = 0; i<15; i++){
+		for(z = 0; z<13; z++){
+			x+="<div onmouseover='hovered(this)'' class='square' id='"+i+"a"+z+"'onclick='selectSquare(this)'></div>";
+	}
+	x+="<br>";
+	}
+	document.getElementById("mapGrid").innerHTML = x;
+	</script>
+</body>

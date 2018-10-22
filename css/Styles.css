@@ -1,0 +1,248 @@
+* {
+margin:0;
+padding:0;
+font-family:Arial
+}
+
+nav ul {
+list-style-type:none;
+overflow:hidden;
+background-color:#d0dbed;
+height:64px;
+width:100%
+}
+
+nav li {
+float:left;
+line-height:64px
+}
+
+nav li a {
+padding:0 16px;
+margin-right:16px;
+display:block;
+color:#000;
+text-align:center;
+text-decoration:none
+}
+
+nav li a:hover {
+background-color:#aab4c4
+}
+
+nav h1 {
+font-size:20px;
+position:absolute;
+left:50%;
+-webkit-transform:translateX(-50%);
+transform:translateX(-50%)
+}
+
+main {
+margin:32px auto;
+width:351px
+}
+
+#second,#budget,#other {
+display:none
+}
+
+main a {
+display:block;
+text-decoration:none;
+text-align:center;
+color:#000;
+margin-top:16px
+}
+
+#start {
+font-size:40px;
+width:100%;
+height:128px;
+background-color:#98a7b7;
+line-height:128px
+}
+
+.other-buttons {
+font-size:20px;
+margin:16px auto;
+width:50%;
+height:64px;
+background-color:#bfd6ef;
+line-height:64px
+}
+
+main a:hover,#start:hover {
+background-color:#7994b2
+}
+
+#other div {
+font-size:40px;
+width:100%;
+height:auto;
+background-color:#98a7b7;
+line-height:128px;
+text-align:center
+}
+
+#mapWindow {
+background-color:#d0dbed;
+height:520px;
+width:520px
+}
+
+.square {
+display:inline-block;
+background-color:#bfd6ef;
+height:25px;
+width:25px;
+border-style:solid;
+border-width:1px;
+border-color:#000
+}
+
+.square:hover {
+background-color:#98a7b7
+}
+
+.buttons {
+background-color:#98a7b7;
+height:25px;
+width:75px;
+padding:10px;
+text-align:center;
+margin-top:16px;
+line-height:25px
+}
+
+.buttons:hover {
+background-color:#aab4c4
+}
+
+#sidebar {
+position:absolute;
+left:10%;
+top:250px
+}
+
+#desc {
+position:absolute;
+right:10%;
+top:250px
+}
+
+table,th,td {
+border:1px solid #000;
+border-collapse:collapse;
+font-size:15px
+}
+
+p {
+font-size:20px;
+text-align:center;
+width:100%
+}
+
+#square,#feature {
+display:none
+}
+
+.block {
+width:100%;
+height:375px;
+background-color:#bfd6ef;
+margin-bottom:32px
+}
+
+#artifacts {
+width:100%;
+display:none
+}
+
+.contextTable {
+width:30%;
+display:inline-block;
+margin-left:3%;
+margin-right:3%
+}
+
+.artifactTable {
+width:60%;
+display:inline-block
+}
+
+h1 {
+text-align:center
+}
+
+.dropdown {
+overflow:hidden;
+float:right;
+width:100px
+}
+
+.dropdown-content {
+display:none;
+position:absolute;
+background-color:#f9f9f9;
+min-width:160px;
+box-shadow:0 8px 16px 0 rgba(0,0,0,0.2);
+z-index:1
+}
+
+.dropdown-content a {
+float:none;
+color:#000;
+text-decoration:none;
+display:block;
+text-align:center;
+margin:0
+}
+
+.dropdown-content a:hover {
+background-color:#ddd
+}
+
+.dropdown:hover .dropdown-content {
+display:block
+}
+
+@media only screen and (max-width: 750px) {
+nav ul {
+padding-top:64px
+}
+
+nav h1 {
+width:100%;
+font-size:20px;
+top:0px
+}
+
+#sidebar {
+position:relative;
+top:0px;
+left:0px;
+width:100%;
+display:inline-block
+}
+
+.buttons {
+display:inline-block;
+width:17%
+}
+
+.contextTable,.artifactTable {
+width:90%;
+margin: 16px 3% 0px 3%
+}
+
+#desc {
+position:relative;
+top:0px;
+right:0px
+}
+
+nav li a {
+padding: 0 8px;
+margin-right: 8px
+}
