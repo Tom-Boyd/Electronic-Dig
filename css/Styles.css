@@ -40,7 +40,7 @@ transform:translateX(-50%)
 
 main {
 margin:32px auto;
-width:351px
+width:494px
 }
 
 #second,#budget,#other {
@@ -94,8 +94,8 @@ width:520px
 .square {
 display:inline-block;
 background-color:#bfd6ef;
-height:25px;
-width:25px;
+height:36px;
+width:36px;
 border-style:solid;
 border-width:1px;
 border-color:#000
@@ -121,8 +121,13 @@ background-color:#aab4c4
 
 #sidebar {
 position:absolute;
-left:10%;
+left:0;
 top:250px
+}
+
+#mapGrid {
+  position:absolute;
+  top:133px;
 }
 
 #desc {
@@ -245,4 +250,19 @@ right:0px
 nav li a {
 padding: 0 8px;
 margin-right: 8px
+}
+}
+/* SVG style */
+#svgMap {
+  width:100%;
+}
+svg *{
+  stroke-width: 0.3;
+}
+svg a path {
+color: rgb(186, 125, 87);
+fill: rgb(186, 125, 87, 0.5)
+}
+svg a path:hover {
+fill: rgb(186, 125, 87, 0.7);
 }

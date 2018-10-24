@@ -133,7 +133,7 @@ function remove(value) {
 function excavateSquare() {
 	for (var i = 0; i< selectedSquares.length; i++){
 		console.log(selectedSquares.length);
-		document.getElementById(selectedSquares[i]).style.backgroundColor= "pink";
+		document.getElementById(selectedSquares[i]).style.backgroundColor= "transparent";
 		excavatedSquares.push(selectedSquares[i]);
 		remove(selectedSquares[i]);
 	}
