@@ -71,6 +71,17 @@ function viewSquare(){
 	map.style.display = "none";
 	feature.style.display = "none";
 	square.style.display = "inline";
+
+	var svg = document.getElementById('svg');
+	var svgStyle = document.getElementById("svgMap");
+	var lines = document.querySelectorAll("svg *");
+	for (i = 0; i < lines.length; ++i) {
+	  lines[i].style.strokeWidth = "0.03";
+	}
+	svgStyle.style.display = "inline";
+	svgStyle.style.height = "494px";
+	svgStyle.style.zIndex = "1";
+	svg.setAttribute("viewBox", "10 -310 10 150");
 }
 function viewMap() {
 	var map = document.getElementById("map");
@@ -81,6 +92,17 @@ function viewMap() {
 	map.style.display = "inline";
 	feature.style.display = "none";
 	square.style.display = "none";
+
+	var svg = document.getElementById('svg');
+	var svgStyle = document.getElementById("svgMap");
+	var lines = document.querySelectorAll("svg *");
+	for (i = 0; i < lines.length; ++i) {
+	  lines[i].style.strokeWidth = "0.3";
+	}
+	svgStyle.style.display = "inline";
+	svgStyle.style.height = "570px";
+	svgStyle.style.zIndex = "-1";
+	svg.setAttribute("viewBox", "-20 -330  130 150");
 }
 function viewFeature() {
 	var map = document.getElementById("map");
@@ -91,6 +113,9 @@ function viewFeature() {
 	map.style.display = "none";
 	feature.style.display = "inline";
 	square.style.display = "none";
+
+	var svgStyle = document.getElementById("svgMap");
+	svgStyle.style.display = "none";
 }
 
 //When the user clicks on a square:

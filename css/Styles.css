@@ -126,8 +126,8 @@ top:250px
 }
 
 #mapGrid {
-  position:absolute;
-  top:133px;
+  /*position:absolute;
+  top:133px;*/
 }
 
 #desc {
@@ -154,9 +154,12 @@ display:none
 
 .block {
 width:100%;
-height:375px;
-background-color:#bfd6ef;
-margin-bottom:32px
+height:494px;
+background-color:transparent;
+margin-bottom:32px;
+border-style:solid;
+border-width:1px;
+border-color:#000
 }
 
 #artifacts {
@@ -254,7 +257,12 @@ margin-right: 8px
 }
 /* SVG style */
 #svgMap {
-  width:100%;
+  width:494px;
+  height:570px;
+  overflow:hidden;
+  position:absolute;
+  top:133px;
+  z-index:-1
 }
 svg *{
   stroke-width: 0.3;
