@@ -29,7 +29,9 @@ function back() {
 
 //Used to keep track of the type of square
 var selectedSquares = [];
+var selectedSquaresObj = [];
 var excavatedSquares = [];
+var excavatedSquaresObj = [];
 
 //Used for drag selecting
 var mouseDown = 0;
@@ -46,23 +48,59 @@ function hovered(square) {
 }
 
 //Lets user select a random number of squares
+var unselectedSquares;
 function random() {
 	var number = prompt("Enter number of squares to select", 0);
-	if (number <= ((15*13)-selectedSquares.length)) {
-		for (i=0;i<number;i++){
-			var x = Math.floor(Math.random() * 15);
-			var y = Math.floor(Math.random() * 13);
-			var square = document.getElementById(""+x+"a"+y+"");
-			if (square.style.backgroundColor == "black"){
-				i -= 1;
-			} else {
-				selectSquare(square);
-			}
+	var squares = document.querySelectorAll("#GRID_UNITS a");
+	unselectedSquares = [];
+	for (i = 0; i < squares.length; ++i) {
+		if (!(selectedSquaresObj.includes(squares[i]) || excavatedSquaresObj.includes(squares[i]))){
+			unselectedSquares.push(squares[i]);
 		}
 	}
+	if (number > unselectedSquares.length) number = unselectedSquares.length;
+	for (i=0;i<number;i++){
+		var x = Math.floor(Math.random() * unselectedSquares.length);
+		console.log(number);
+		unselectedSquares[x].onclick();
+		remove(unselectedSquares,unselectedSquares[x]);
+	}
+}
+var to, from = [];
+var per, sto, sfrom, hto, hfrom = 0;
+var svg, svgStyle, lines;
+var view = "map";
+function mapZoom() {
+	per += 0.2;
+	var val = [0,0,0,0];
+	for (var i = 0; i < 4; i++) val[i] = from[i] + ((to[i]-from[i]) * per);
+	var stroke = sfrom + ((sto-sfrom) * per);
+	for (i = 0; i < lines.length; ++i) lines[i].style.strokeWidth = stroke;
+	var height = hfrom + ((hto-hfrom) * per);
+	svgStyle.style.height = height+"px";
+	if (val[2] < 0) val[2] = 0;
+	if (val[3] < 0) val[3] = 0;
+	if (per >= 1) {
+		svg.setAttribute("viewBox", to[0]+" "+to[1]+" "+to[2]+" "+to[3]);
+		if (view == "square") hideGrid();
+		return;
+	} else svg.setAttribute("viewBox", val[0]+" "+val[1]+" "+val[2]+" "+val[3]);
+	setTimeout(startZoom, 1);
+}
+function startZoom() {
+	mapZoom();
+}
+function hideGrid() {
+	var grid = document.getElementById("GRID_UNITS");
+	grid.style.display = "none";
+}
+function showGrid() {
+	var grid = document.getElementById("GRID_UNITS");
+	grid.style.display = "inline";
 }
 //These 3 functions can show the 3 different views
 function viewSquare(){
+	view = "square";
 	var map = document.getElementById("map");
 	var square = document.getElementById("square");
 	var feature = document.getElementById("feature");
@@ -72,18 +110,22 @@ function viewSquare(){
 	feature.style.display = "none";
 	square.style.display = "inline";
 
-	var svg = document.getElementById('svg');
-	var svgStyle = document.getElementById("svgMap");
-	var lines = document.querySelectorAll("svg *");
-	for (i = 0; i < lines.length; ++i) {
-	  lines[i].style.strokeWidth = "0.03";
-	}
-	svgStyle.style.display = "inline";
-	svgStyle.style.height = "494px";
-	svgStyle.style.zIndex = "1";
-	svg.setAttribute("viewBox", "10 -310 10 150");
+	svg = document.getElementById('svg');
+	svgStyle = document.getElementById("svgMap");
+	lines = document.querySelectorAll("svg *");
+	per = 0;
+	to = [10,-310,10,150]
+	from = [-20, -330, 130, 150]
+	sto = 0.05;
+	sfrom = 0.3;
+	hto = 494;
+	hfrom = 570;
+	startZoom();
+	//svg.setAttribute("viewBox", "10 -310 10 150");
 }
 function viewMap() {
+	view = "map";
+	showGrid();
 	var map = document.getElementById("map");
 	var square = document.getElementById("square");
 	var feature = document.getElementById("feature");
@@ -93,16 +135,17 @@ function viewMap() {
 	feature.style.display = "none";
 	square.style.display = "none";
 
-	var svg = document.getElementById('svg');
-	var svgStyle = document.getElementById("svgMap");
-	var lines = document.querySelectorAll("svg *");
-	for (i = 0; i < lines.length; ++i) {
-	  lines[i].style.strokeWidth = "0.3";
-	}
-	svgStyle.style.display = "inline";
-	svgStyle.style.height = "570px";
-	svgStyle.style.zIndex = "-1";
-	svg.setAttribute("viewBox", "-20 -330  130 150");
+	per = 0;
+	var temp = to;
+	to = from;
+	from = temp;
+	temp = sto;
+	sto = sfrom;
+	sfrom = temp;
+	temp = hto;
+	hto = hfrom;
+	hfrom = temp;
+	startZoom();
 }
 function viewFeature() {
 	var map = document.getElementById("map");
@@ -121,48 +164,46 @@ function viewFeature() {
 //When the user clicks on a square:
 //Selects a square if its not excavated or already selected
 //Deselects a square if its already selected
-function selectSquare(div) {
-	if(selectedSquares.includes(div.id)) {
-		div.style.backgroundColor= "#bfd6ef";
-		remove(div.id);
+function square(object,info) {
+	if(selectedSquaresObj.includes(object)) { //deselect
+		object.firstChild.style.fill= "url(#imgGrass)";
+		remove(selectedSquares, info);
+		remove(selectedSquaresObj, object);
 	} else {
-		if(excavatedSquares.includes(div.id)) {
+		if(excavatedSquaresObj.includes(object)) {
 			viewSquare();
 		} else {
-			div.style.backgroundColor= "black";
-			selectedSquares.push(div.id);
+			object.firstChild.style.fill= "rgb(50, 75, 114)";
+			selectedSquares.push(info);
+			selectedSquaresObj.push(object);
 		}
 	}
 }
 
 //Deselects all squares
 function deselect() {
-	for (var i = 0; i< selectedSquares.length; i++){
-		selectSquare(document.getElementById(selectedSquares[i]));
-	}
-	if (selectedSquares.length > 0){
-		deselect();
+	for (var i = selectedSquares.length-1; i>=0; i--){
+		selectedSquaresObj[i].onclick();
 	}
 }
 
-//Removes a square from the selected square array
-function remove(value) {
-	for (var i = 0; i< selectedSquares.length; i++){
-		if (selectedSquares[i] == value){
-			selectedSquares.splice(i,1);
+//Removes element from array
+function remove(list,value) {
+	for (var i = 0; i< list.length; i++){
+		if (list[i] == value){
+			list.splice(i,1);
 		}
 	}
 }
 
 //Excavates all the squares selected
 function excavateSquare() {
-	for (var i = 0; i< selectedSquares.length; i++){
-		console.log(selectedSquares.length);
-		document.getElementById(selectedSquares[i]).style.backgroundColor= "transparent";
+	var num = selectedSquares.length;
+	for (i = 0; i< num; i++){
+		selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
 		excavatedSquares.push(selectedSquares[i]);
-		remove(selectedSquares[i]);
+		excavatedSquaresObj.push(selectedSquaresObj[i]);
 	}
-	if (selectedSquares.length > 0){
-		excavateSquare();
-	}
+	selectedSquares = [];
+	selectedSquaresObj = [];
 }
