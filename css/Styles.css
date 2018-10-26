@@ -125,11 +125,6 @@ left:0;
 top:250px
 }
 
-#mapGrid {
-  /*position:absolute;
-  top:133px;*/
-}
-
 #desc {
 position:absolute;
 right:10%;
@@ -262,15 +257,19 @@ margin-right: 8px
   overflow:hidden;
   position:absolute;
   top:133px;
-  z-index:-1
+  z-index:1
 }
 svg *{
   stroke-width: 0.3;
 }
-svg a path {
+#Features a path {
 color: rgb(186, 125, 87);
 fill: rgb(186, 125, 87, 0.5)
 }
-svg a path:hover {
+#Features a path:hover {
 fill: rgb(186, 125, 87, 0.7);
+}
+#GRID_UNITS a path {
+fill: url(#imgGrass);
+color:rgb(50, 75, 114)
 }
