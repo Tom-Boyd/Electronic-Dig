@@ -99,7 +99,7 @@ function showGrid() {
 	grid.style.display = "inline";
 }
 //These 3 functions can show the 3 different views
-function viewSquare(){
+function viewSquare(info){
 	view = "square";
 	var map = document.getElementById("map");
 	var square = document.getElementById("square");
@@ -114,8 +114,19 @@ function viewSquare(){
 	svgStyle = document.getElementById("svgMap");
 	lines = document.querySelectorAll("svg *");
 	per = 0;
-	to = [10,-310,10,150]
-	from = [-20, -330, 130, 150]
+
+	var string = info.split("S")[1];
+	var first = parseInt(string.split("R")[0]);
+	var second = parseInt(string.split("R")[1]);
+	console.log(first);
+	console.log(second);
+	if (second == 103) second = 110;
+	first = (first+10)*-1;
+	second = second-10;
+	console.log(first);
+	console.log(second);
+	to = [second,first,10,150];
+	from = [-20, -330, 130, 150];
 	sto = 0.05;
 	sfrom = 0.3;
 	hto = 494;
@@ -171,13 +182,18 @@ function square(object,info) {
 		remove(selectedSquaresObj, object);
 	} else {
 		if(excavatedSquaresObj.includes(object)) {
-			viewSquare();
+			if (info != 'null') viewSquare(info);
 		} else {
-			object.firstChild.style.fill= "rgb(50, 75, 114)";
+			object.firstChild.style.fill= "url(#imgGrassSelected)";
 			selectedSquares.push(info);
 			selectedSquaresObj.push(object);
 		}
 	}
+}
+
+function showSVG() {
+	var svgMap = document.getElementById("svgMap");
+	svgMap.style.display = "inline";
 }
 
 //Deselects all squares
