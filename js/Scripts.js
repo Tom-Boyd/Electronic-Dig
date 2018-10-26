@@ -12,6 +12,18 @@ function start() {
 		alert("Using a budget of $" + budget + ". You may begin your dig.");
 	}
 }
+
+window.addEventListener('wheel',function(){
+	var x = event.clientX, y = event.clientY,
+  element = document.elementFromPoint(x, y).parentElement;
+	if (excavatedSquaresObj.includes(element) && event.deltaY < 0){
+		element.onclick();
+	}
+	if (element.id == "svgMap" && view == "square"  && event.deltaY > 0) {
+		viewMap();
+	}
+})
+
 //Shows the tutorial or primer
 function tutPri() {
 	var first = document.getElementById("first");
@@ -118,13 +130,9 @@ function viewSquare(info){
 	var string = info.split("S")[1];
 	var first = parseInt(string.split("R")[0]);
 	var second = parseInt(string.split("R")[1]);
-	console.log(first);
-	console.log(second);
 	if (second == 103) second = 110;
 	first = (first+10)*-1;
 	second = second-10;
-	console.log(first);
-	console.log(second);
 	to = [second,first,10,150];
 	from = [-20, -330, 130, 150];
 	sto = 0.05;
