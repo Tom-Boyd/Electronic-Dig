@@ -1,7 +1,18 @@
+//Declare global variables
+document.addEventListener("DOMContentLoaded", function(event) {
+	svg = document.getElementById('svg');
+	svgStyle = document.getElementById("svgMap");
+	lines = document.querySelectorAll("svg *");
+
+	//Show map
+	var svgMap = document.getElementById("svgMap");
+	svgMap.style.display = "inline";
+});
+
 //Prompts user to enter a buget
 function start() {
 	if (document.getElementById("unlimited").checked) {
-			return;
+		return;
 	}
 	var budget = prompt("Budget prompt", 20000);
 
@@ -13,6 +24,7 @@ function start() {
 	}
 }
 
+//Allows scroll wheel to enter and exit a square
 window.addEventListener('wheel',function(){
 	var x = event.clientX, y = event.clientY,
   element = document.elementFromPoint(x, y).parentElement;
@@ -22,7 +34,7 @@ window.addEventListener('wheel',function(){
 	if (element.id == "svgMap" && view == "square"  && event.deltaY > 0) {
 		viewMap();
 	}
-})
+});
 
 //Shows the tutorial or primer
 function tutPri() {
@@ -49,10 +61,10 @@ var excavatedSquaresObj = [];
 var mouseDown = 0;
 document.body.onmousedown = function() {
   mouseDown = 1;
-}
+};
 document.body.onmouseup = function() {
   mouseDown = 0;
-}
+};
 function hovered(square) {
 	if (mouseDown == 1){
 		selectSquare(square);
@@ -78,10 +90,15 @@ function random() {
 		remove(unselectedSquares,unselectedSquares[x]);
 	}
 }
+
+//Global vars to do with map zooming
 var to, from = [];
 var per, sto, sfrom, hto, hfrom = 0;
 var svg, svgStyle, lines;
 var view = "map";
+//mapZoom gets a new value using a percentage of
+//what the value started as, to what the value will be.
+//This creates a animation of zooming in and out
 function mapZoom() {
 	per += 0.2;
 	var val = [0,0,0,0];
@@ -97,19 +114,21 @@ function mapZoom() {
 		if (view == "square") hideGrid();
 		return;
 	} else svg.setAttribute("viewBox", val[0]+" "+val[1]+" "+val[2]+" "+val[3]);
-	setTimeout(startZoom, 1);
+	setTimeout(mapZoom, 1);
 }
-function startZoom() {
-	mapZoom();
-}
+
+//Hides grid so a feature can be clicked
 function hideGrid() {
 	var grid = document.getElementById("GRID_UNITS");
 	grid.style.display = "none";
 }
+
+//Shows grid so a square can be clicked
 function showGrid() {
 	var grid = document.getElementById("GRID_UNITS");
 	grid.style.display = "inline";
 }
+
 //These 3 functions can show the 3 different views
 function viewSquare(info){
 	view = "square";
@@ -122,25 +141,21 @@ function viewSquare(info){
 	feature.style.display = "none";
 	square.style.display = "inline";
 
-	svg = document.getElementById('svg');
-	svgStyle = document.getElementById("svgMap");
-	lines = document.querySelectorAll("svg *");
+	//Set value for zooming in
 	per = 0;
-
 	var string = info.split("S")[1];
 	var first = parseInt(string.split("R")[0]);
 	var second = parseInt(string.split("R")[1]);
 	if (second == 103) second = 110;
 	first = (first+10)*-1;
 	second = second-10;
-	to = [second,first,10,150];
-	from = [-20, -330, 130, 150];
-	sto = 0.05;
-	sfrom = 0.3;
-	hto = 494;
-	hfrom = 570;
-	startZoom();
-	//svg.setAttribute("viewBox", "10 -310 10 150");
+	to = [second,first,10,150]; //viewbox
+	from = [-20, -330, 130, 150]; //viewbox
+	sto = 0.05; //stroke
+	sfrom = 0.3; //stroke
+	hto = 494; //height
+	hfrom = parseInt(svgStyle.style.height); //height
+	mapZoom();
 }
 function viewMap() {
 	view = "map";
@@ -154,6 +169,7 @@ function viewMap() {
 	feature.style.display = "none";
 	square.style.display = "none";
 
+	//Reverses all values for map zooming
 	per = 0;
 	var temp = to;
 	to = from;
@@ -164,7 +180,7 @@ function viewMap() {
 	temp = hto;
 	hto = hfrom;
 	hfrom = temp;
-	startZoom();
+	mapZoom();
 }
 function viewFeature() {
 	var map = document.getElementById("map");
@@ -197,11 +213,6 @@ function square(object,info) {
 			selectedSquaresObj.push(object);
 		}
 	}
-}
-
-function showSVG() {
-	var svgMap = document.getElementById("svgMap");
-	svgMap.style.display = "inline";
 }
 
 //Deselects all squares
