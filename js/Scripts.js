@@ -24,6 +24,21 @@ function start() {
 	}
 }
 
+window.addEventListener('mouseover',function(){
+	if (mouseDown == 1) {
+		element = event.target.parentElement;
+		parent = element.parentElement;
+		if (parent) {
+			if (!excavatedSquaresObj.includes(element) && !selectedSquaresObj.includes(element)) {
+				if (parent.id == "GRID_UNITS") {
+					console.log("found");
+					element.onclick();
+				}
+			}
+		}
+	}
+});
+
 //Allows scroll wheel to enter and exit a square
 window.addEventListener('wheel',function(){
 	var x = event.clientX, y = event.clientY,
@@ -65,11 +80,6 @@ document.body.onmousedown = function() {
 document.body.onmouseup = function() {
   mouseDown = 0;
 };
-function hovered(square) {
-	if (mouseDown == 1){
-		selectSquare(square);
-	}
-}
 
 //Lets user select a random number of squares
 var unselectedSquares;
