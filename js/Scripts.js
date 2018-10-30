@@ -31,7 +31,6 @@ window.addEventListener('mouseover',function(){
 		if (parent) {
 			if (!excavatedSquaresObj.includes(element) && !selectedSquaresObj.includes(element)) {
 				if (parent.id == "GRID_UNITS") {
-					console.log("found");
 					element.onclick();
 				}
 			}
@@ -157,10 +156,16 @@ function viewSquare(info){
 		//Set value for zooming in
 		per = 0;
 		var string = info.split("S")[1];
-		var first = parseInt(string.split("R")[0]);
-		var second = parseInt(string.split("R")[1]);
-		if (second == 103) second = 110;
-		first = (first+10)*-1;
+		if (string.includes("R")) {
+			var first = parseInt(string.split("R")[0]);
+			var second = parseInt(string.split("R")[1]);
+			if (second == 103) second = 110;
+			first = (first+10)*-1;
+		} else {
+			var first = parseInt(string.split("L")[0]);
+			var second = -10;
+			first = (first+10)*-1;
+		}
 		second = second-10;
 		to = [second,first,10,150]; //viewbox
 		from = [-20, -330, 130, 150]; //viewbox
