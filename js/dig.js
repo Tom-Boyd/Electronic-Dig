@@ -1,5 +1,6 @@
-//Declare global variables
+// EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", function(event) {
+  //Declare DOM global variables
 	svg = document.getElementById('svg');
 	svgStyle = document.getElementById("svgMap");
 	lines = document.querySelectorAll("svg *");
@@ -7,24 +8,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	//Show map
 	var svgMap = document.getElementById("svgMap");
 	svgMap.style.display = "inline";
+
+  //modal
+  var modal = document.getElementById('myModal');
+  var btn = document.getElementById("myBtn");
+  var span = document.getElementsByClassName("close")[0];
+  btn.onclick = function() { modal.style.display = "block";}
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {	modal.style.display = "none";}
 });
-
-//Prompts user to enter a buget
-function start() {
-	if (document.getElementById("unlimited").checked) {
-		return;
-	}
-	var budget = prompt("Budget prompt", 20000);
-
-	if (budget == 0 || budget == "") {
-		alert("Using an unlimited budget");
-	}
-	else {
-		alert("Using a budget of $" + budget + ". You may begin your dig.");
-	}
-}
-
 window.addEventListener('mouseover',function(){
+  //Drag selecting
 	if (mouseDown == 1) {
 		element = event.target.parentElement;
 		parent = element.parentElement;
@@ -37,9 +31,8 @@ window.addEventListener('mouseover',function(){
 		}
 	}
 });
-
-//Allows scroll wheel to enter and exit a square
 window.addEventListener('wheel',function(){
+  //Allows scroll wheel to enter and exit a square
 	var x = event.clientX, y = event.clientY,
   element = document.elementFromPoint(x, y).parentElement;
 	if (excavatedSquaresObj.includes(element) && event.deltaY < 0){
@@ -50,19 +43,12 @@ window.addEventListener('wheel',function(){
 	}
 });
 
-//Shows the tutorial or primer
-function tutPri() {
-	var first = document.getElementById("first");
-	var other = document.getElementById("other");
-	first.style.display = "none";
-	other.style.display = "block";
-}
-//From the tutorial or primer back, this will take them to the start screen
-function back() {
-	var first = document.getElementById("first");
-	var other = document.getElementById("other");
-	first.style.display = "block";
-	other.style.display = "none";
+// When the user clicks anywhere outside of the modal, close it
+var modal, btn, span;
+window.onclick = function(event) {
+		if (event.target == modal) {
+				modal.style.display = "none";
+		}
 }
 
 //Used to keep track of the type of square
@@ -221,7 +207,11 @@ function viewFeature() {
 //When the user clicks on a square:
 //Selects a square if its not excavated or already selected
 //Deselects a square if its already selected
-function square(object,info) {
+var selectedSquares = [];
+var selectedSquaresObj = [];
+var excavatedSquares = [];
+var excavatedSquaresObj = [];
+function square(object,info) {;
 	if(selectedSquaresObj.includes(object)) { //deselect
 		object.firstChild.style.fill= "url(#imgGrass)";
 		remove(selectedSquares, info);
@@ -257,6 +247,7 @@ function remove(list,value) {
 function excavateSquare() {
 	var num = selectedSquares.length;
 	for (i = 0; i< num; i++){
+    console.log(selectedSquaresObj[i]);
 		selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
 		excavatedSquares.push(selectedSquares[i]);
 		excavatedSquaresObj.push(selectedSquaresObj[i]);

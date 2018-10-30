@@ -5,54 +5,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Electronic Dig</title>
-	<link rel="stylesheet" href="../css/Styles.css">
+	<link rel="stylesheet" href="css/Styles.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-	body {font-family: Arial, Helvetica, sans-serif;}
-
-	/* The Modal (background) */
-	.modal {
-	    display: none; /* Hidden by default */
-	    position: fixed; /* Stay in place */
-	    z-index: 1; /* Sit on top */
-	    padding-top: 100px; /* Location of the box */
-	    left: 0;
-	    top: 0;
-	    width: 100%; /* Full width */
-	    height: 100%; /* Full height */
-	    overflow: auto; /* Enable scroll if needed */
-	    background-color: rgb(0,0,0); /* Fallback color */
-	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	}
-
-	/* Modal Content */
-	.modal-content {
-	    background-color: #fefefe;
-	    margin: auto;
-	    padding: 20px;
-	    border: 1px solid #888;
-	    width: 80%;
-	}
-
-	/* The Close Button */
-	.close {
-	    color: #aaaaaa;
-	    float: right;
-	    font-size: 28px;
-	    font-weight: bold;
-	}
-
-	.close:hover,
-	.close:focus {
-	    color: #000;
-	    text-decoration: none;
-	    cursor: pointer;
-	}
-	</style>
 </head>
 
 <body>
-	<script src="../js/Scripts.js"></script>
+	<script src="js/dig.js"></script>
 	<nav>
 		<ul>
 			<li><a href="https://rla.unc.edu/dig/">Main Menu</a></li>
@@ -78,7 +36,7 @@
 				<div class="buttons" onclick="excavateSquare()">Excavate</div>
 				<div class="buttons" onclick="deselect()">Deselect</div>
 				<div class="buttons" onclick="random()">Random</div>
-                <a class="buttons" href="../Index.html"><div>Reset</div></a>
+                <a class="buttons" href="index.html"><div>Reset</div></a>
 			</div>
 		</div>
 		<div id="square">
@@ -116,10 +74,10 @@
 		   <g id="ID__#42_Model_Space"></g>
 		   <g id="ID__#42_Paper_Space"></g>
 			 <pattern id="imgGrassSelected" x="0" y="0" width="1" height="1">
-		        <image width="10" height="10" xlink:href="../images/grassTextureSelected.jpg"/>
+		        <image width="10" height="10" xlink:href="images/grassTextureSelected.jpg"/>
 		    </pattern>
 			 <pattern id="imgGrass" x="0" y="0" width="1" height="1">
-		        <image width="10" height="10" xlink:href="../images/grassTexture.jpg"/>
+		        <image width="10" height="10" xlink:href="images/grassTexture.jpg"/>
 		    </pattern>
 		  </defs>
 		  <g id="draft" transform="matrix(1 0 0 -1 0 0)" stroke-width="0.035009825">
@@ -4555,7 +4513,7 @@
 
 					<!-- <td></td> -->
 					<!-- <td>=></td> -->
-				  </tr>  
+				  </tr>
 				  <tr>
 					<td>Potsherd</td>
 					<!-- <td>1/4"</td> -->
@@ -4577,33 +4535,4 @@
 		  </div>
 
 		</div>
-
-		<script>
-		// Get the modal
-		var modal = document.getElementById('myModal');
-
-		// Get the button that opens the modal
-		var btn = document.getElementById("myBtn");
-
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
-
-		// When the user clicks the button, open the modal 
-		btn.onclick = function() {
-		    modal.style.display = "block";
-		}
-
-		// When the user clicks on <span> (x), close the modal
-		span.onclick = function() {
-		    modal.style.display = "none";
-		}
-
-		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-		    if (event.target == modal) {
-		        modal.style.display = "none";
-		    }
-		}
-		</script>
-
 </body>
