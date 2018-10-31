@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var btn = document.getElementById("myBtn");
   var span = document.getElementsByClassName("close")[0];
   btn.onclick = function() { modal.style.display = "block";}
-  // When the user clicks on <span> (x), close the modal
+  //When the user clicks on <span> (x), close the modal
   span.onclick = function() {	modal.style.display = "none";}
 });
 window.addEventListener('mouseover',function(){
@@ -43,7 +43,89 @@ window.addEventListener('wheel',function(){
 	}
 });
 
-// When the user clicks anywhere outside of the modal, close it
+//Ajax call
+var contextTable, artifactTable, properties;
+function getData(code) {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          var data = this.responseText;
+          //Reformat data
+          contextTable = [];
+          artifactTable = [];
+          properties = [];
+          var context = data.split("[")[0].split("]");
+          for (i = 0; i < context.length; ++i) {
+            contextTable.push(context[i].split("|"));
+          }
+          var artifact = data.split("[")[1].split("]");
+          for (i = 0; i < artifact.length; ++i) {
+            artifactTable.push(artifact[i].split("|"));
+          }
+          properties = data.split("[")[2].split("|");
+          update();
+      }
+  };
+  xmlhttp.open("GET", "php/connection.php?code=" + code, true);
+  xmlhttp.send();
+}
+
+function update() {
+  var title = document.getElementById("ajTitle");
+  var type = document.getElementById("ajType");
+  var length = document.getElementById("ajLength");
+  var width = document.getElementById("ajWidth");
+  var depth = document.getElementById("ajDepth");
+  var volume = document.getElementById("ajVolume");
+  var area = document.getElementById("ajArea");
+  title.innerHTML = properties[0];
+  type.innerHTML = properties[1];
+  length.innerHTML = properties[2];
+  width.innerHTML = properties[3];
+  depth.innerHTML = properties[4];
+  area.innerHTML = properties[5];
+  volume.innerHTML = properties[6];
+  generateCTable();
+  generateATable(0);
+}
+
+function generateATable(contextID) {
+  var aTable = document.getElementById("artifactTable");
+  var table = "<table><tr>";
+  table += "<th>Cat No.</th>";
+  table += "<th>Artifacts</th>";
+  table += "<th>More</th>";
+  table += "</tr>";
+  for (i = 0; i < artifactTable.length; ++i) {
+    if (artifactTable[i][0] == contextID) {
+      table += "<tr>";
+      for (z = 1; z < artifactTable[i].length; ++z) {
+        table += "<td>"+artifactTable[i][z]+"</td>";
+      }
+      table += "</tr>";
+    }
+  }
+  aTable.innerHTML = table;
+}
+
+function generateCTable() {
+  var cTable = document.getElementById("contextTable");
+  var table = "<table><tr>";
+  table += "<th>Context</th>";
+  table += "<th>Entries</th>";
+  table += "<th>Photo</th>";
+  table += "</tr>";
+  for (i = 0; i < contextTable.length-1; ++i) {
+    table += "<tr onclick='generateATable("+i+")'>";
+    for (z = 0; z < contextTable[i].length; ++z) {
+      table += "<td>"+contextTable[i][z]+"</td>";
+    }
+    table += "</tr>";
+  }
+  cTable.innerHTML = table;
+}
+
+//When the user clicks anywhere outside of the modal, close it
 var modal, btn, span;
 window.onclick = function(event) {
 		if (event.target == modal) {
@@ -80,7 +162,6 @@ function random() {
 	if (number > unselectedSquares.length) number = unselectedSquares.length;
 	for (i=0;i<number;i++){
 		var x = Math.floor(Math.random() * unselectedSquares.length);
-		console.log(number);
 		unselectedSquares[x].onclick();
 		remove(unselectedSquares,unselectedSquares[x]);
 	}
@@ -218,7 +299,10 @@ function square(object,info) {;
 		remove(selectedSquaresObj, object);
 	} else {
 		if(excavatedSquaresObj.includes(object)) {
-			if (info != 'null') viewSquare(info);
+			if (info != 'null') {
+        getData(info);
+        viewSquare(info);
+      }
 		} else {
 			object.firstChild.style.fill= "url(#imgGrassSelected)";
 			selectedSquares.push(info);
@@ -247,7 +331,6 @@ function remove(list,value) {
 function excavateSquare() {
 	var num = selectedSquares.length;
 	for (i = 0; i< num; i++){
-    console.log(selectedSquaresObj[i]);
 		selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
 		excavatedSquares.push(selectedSquares[i]);
 		excavatedSquaresObj.push(selectedSquaresObj[i]);

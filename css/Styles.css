@@ -159,14 +159,14 @@ width:100%;
 display:none
 }
 
-.contextTable {
+#contextTable {
 width:30%;
 display:inline-block;
 margin-left:3%;
 margin-right:3%
 }
 
-.artifactTable {
+#artifactTable {
 width:60%;
 display:inline-block
 }
@@ -272,7 +272,7 @@ display:inline-block;
 width:17%
 }
 
-.contextTable,.artifactTable {
+#contextTable,#artifactTable {
 width:90%;
 margin: 16px 3% 0px 3%
 }

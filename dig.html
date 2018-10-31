@@ -40,14 +40,17 @@
 			</div>
 		</div>
 		<div id="square">
-			<h1>Square No.</h1>
+			<h1 id="ajTitle">Square No.</h1>
 			<div class="block" onclick="viewFeature()"></div>
 			<div id="sidebar">
 				<div class="buttons" onclick="viewMap()">Map</div>
-				<h4>Type:</h4>
+				<h4>Type: <span id="ajType"></span></h4>
 				<h4>Dimensions:</h4>
-				<h4>Volume:</h4>
-				<h4>Area:</h4>
+				<h4>  Length: <span id="ajLength"></span> ft</h4>
+				<h4>  Width: <span id="ajWidth"></span> ft</h4>
+				<h4>  Depth: <span id="ajDepth"></span> ft</h4>
+				<h4>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h4>
+				<h4>Area: <span id="ajArea"></span> ft<sup>2</sup></h4>
 			</div>
 			<div id="desc">
 				<h2>Description</h2>
@@ -61,6 +64,9 @@
 				<div class="buttons" onclick="viewSquare()">Square</div>
 				<h4>Type:</h4>
 				<h4>Dimensions:</h4>
+				<h4>Length:</h4>
+				<h4>Width:</h4>
+				<h4>Depth:</h4>
 				<h4>Volume:</h4>
 				<h4>Area:</h4>
 			</div>
@@ -4476,7 +4482,7 @@
 	</main>
 		<div id="artifacts">
 			<h1>Artifacts</h1>
-			<div class="contextTable">
+			<div id="contextTable">
 				<table style="width:100%">
 				  <tr>
 					<th>Context</th>
@@ -4495,7 +4501,7 @@
 				  </tr>
 				</table>
 			</div>
-			<div class="artifactTable">
+			<div id="artifactTable">
 				<table style="width:100%">
 				  <tr>
 					<th>Cat No.</th>
