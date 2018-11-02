@@ -4,8 +4,8 @@ define('MYSQL_NUM',MYSQLI_NUM);
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
   //Create connection
   $servername = "localhost";
-  $username = "root";
-  $password = "Hgft576ee!";
+  $username = "electronicdig";
+  $password = "occaneechi523";
   $dbname = "electron_database";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
 
