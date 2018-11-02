@@ -4,8 +4,8 @@ define('MYSQL_NUM',MYSQLI_NUM);
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
   //Create connection
   $servername = "localhost";
-  $username = "electronicdig";
-  $password = "occaneechi523";
+  $username = "root";
+  $password = "Hgft576ee!";
   $dbname = "electron_database";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
 
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $table = "squares";
     if (strpos($code, 'fea') !== false || strpos($code, 'bur') !== false) $table = "features";
 
-    //Declar arrays to be populated
+    //Declare arrays to be populated
     $contextTable = array();
     $artifactTables = array();
     $moreTables = array();
@@ -99,6 +99,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
           //First push table name - used in JS to filter columns
           array_push($moreTable,$moreTableName);
+
+          $columns = array();
+          $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$moreTableName."'";
+          $query = $conn->query($sql);
+          while ($col = mysqli_fetch_array($query, MYSQLI_NUM)) {
+            array_push($columns,$col);
+          }
+          array_push($moreTable,$columns);
 
           //Push the rest of the data
           $sql = "SELECT * FROM ".$moreTableName." WHERE catalog_no = '".$catalog."'";
