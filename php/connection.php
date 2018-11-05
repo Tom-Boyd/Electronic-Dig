@@ -89,13 +89,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
           $catalog = $artifactTables[$x][$z][8];
 
           //First push the column names
-          $columns = array();
-          $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$moreTableName."'";
-          $query = $conn->query($sql);
-          while ($col = mysqli_fetch_array($query, MYSQLI_NUM)) {
-            array_push($columns,$col);
-          }
-          array_push($moreTable,$columns);
+          //$columns = array();
+          //$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$moreTableName."'";
+          //$query = $conn->query($sql);
+          //while ($col = mysqli_fetch_array($query, MYSQLI_NUM)) {
+          //  array_push($columns,$col);
+          //}
+          //array_push($moreTable,$columns);
+
+          //First push table name - used in JS to filter columns
+          array_push($moreTable,$moreTableName);
 
           //Push the rest of the data
           $sql = "SELECT * FROM ".$moreTableName." WHERE catalog_no = '".$catalog."'";

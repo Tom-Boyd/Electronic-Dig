@@ -176,21 +176,64 @@ function more(index) {
 		pictures = sqpictures;
 		moreTables = sqmoreTables;
 	}
+
+	//Filter Columns
+	var tableName = moreTables[index][0];
+	var columnNames = [];
+	var indexes = [];
+	var title = "";
+
+	if (tableName == "aabeads") {
+		title = "Beads";
+		columnNames = ["Catalog Number","Material","Condition","Manufacture","Size","Shape","Diaphaneity","Color","Count"];
+		indexes = [1,3,4,5,6,7,8,9];
+	}
+	if (tableName == "aaceram") {
+		title = "Ceramics";
+		columnNames = ["Catalog Number","Portion","Temper","Surface","Interior","Size","Thickness","Decoration"];
+		indexes = [1,2,3,4,5,6,7,11];
+	}
+	if (tableName == "aafaun") {
+		title = "Fauna";
+		columnNames = ["Catalog Number","Species","Name","Class","Element","Size","Count"];
+		indexes = [1,2,3,4,5,10,12];
+	}
+	if (tableName == "aahc") {
+		title = "Historic Ceramics";
+		columnNames = ["Catalog Number","Portion","Ware","Type","Decoration","Size","Count"];
+		indexes = [1,2,3,4,5,8,9];
+	}
+	if (tableName == "aahist") {
+		title = "Historic Artifacts";
+		columnNames = ["Catalog Number","Material Type","Type","Function","Size","Count"];
+		indexes = [1,3,4,5,8,9];
+	}
+	if (tableName == "aalithic") {
+		title = "Stone Tools";
+		columnNames = ["Catalog Number","Category","Raw Material","Condition","Size","Count"];
+		indexes = [1,2,5,6,7,8];
+	}
+	if (tableName == "aapip") {
+		title = "Pipes";
+		columnNames = ["Catalog Number","Raw Material","Morphology","Portion","Count"];
+		indexes = [1,2,3,4,18];
+	}
+
 	var modal = document.getElementById('myModal');
 	var modalEdit = document.getElementById('modalEdit');
 	modal.style.display = "block";
-	var table = "<table><tr>";
-	for (i = 0; i < moreTables[index][0].length; ++i) {
-			table += "<th>"+moreTables[index][0][i]+"</th>";
+
+	title = "<h1>"+title+"</h1>"
+	//Column names
+	var table = title+"<table><tr>";
+	for (i = 0; i < columnNames.length; ++i) {
+			table += "<th>"+columnNames[i]+"</th>";
 	}
 	table += "</tr>";
-
-	//TODO filter out columns
-
 	for (i = 1; i < moreTables[index].length; ++i) {
 		table += "<tr>";
-		for (z = 0; z < moreTables[index][i].length; ++z) {
-			table += "<td>"+moreTables[index][i][z]+"</td>";
+		for (z = 0; z < indexes.length; ++z) {
+			table += "<td>"+moreTables[index][i][indexes[z]]+"</td>";
 		}
 		table += "</tr>";
 	}
