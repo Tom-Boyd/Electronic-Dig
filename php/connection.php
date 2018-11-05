@@ -1,65 +1,132 @@
 <?php
-//if ($_SERVER["REQUEST_METHOD"] == "GET") {
+define('MYSQL_NUM',MYSQLI_NUM);
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+  //Create connection
   $servername = "localhost";
   $username = "electronicdig";
   $password = "occaneechi523";
   $dbname = "electron_database";
-  //Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
+
   //Check connection
   if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
   }
+
+  //Gets Info about a square or feature
   if (isset($_GET["code"])) {
-    $code = $_GET["code"];
+    $code = mysqli_real_escape_string($conn, $_GET["code"]); //For security
+
+    //Get general data about the item
     $sql = "SELECT prov,type,length,width,depth,area,vol FROM masterls WHERE UPPER(code) = '".$code."' limit 1";
-    $properties = mysqli_fetch_array($conn->query($sql));
-    $sql = "SELECT filecode,context,description,qty,unit,size,adinfo,catno FROM squares WHERE econtext = '".$code."'";
-    $results = $conn->query($sql);
+    $query = $conn->query($sql);
+    if (!$query) printf("Error: %s\n", mysqli_error($conn));
+    $properties = mysqli_fetch_array($query);
+
+    //Finds which table we need (Square or Feature)
+    $table = "squares";
+    if (strpos($code, 'fea') !== false || strpos($code, 'bur') !== false) $table = "features";
+
+    //Declar arrays to be populated
     $contextTable = array();
-    $artifactTable = array();
-    while ($data = mysqli_fetch_array($results)) {
-      $exists = false;
-      for ($x=0; $x < count($contextTable); $x++){
-        if ($contextTable[$x][0] == $data[1]) {
-          $more = "0";
-          if (ctype_space($data[6])) $more = "1";
-          array_push($artifactTable,array($x,$data[7],$data[2],$more));
-          $contextTable[$x][1] += 1;
-          if (ctype_space($data[0])) {
-            $contextTable[$x][2] = "Y";
-          }
-          $exists = true;
+    $artifactTables = array();
+    $moreTables = array();
+    $morePictures = array();
+
+    //Populate the context table
+    $sql = "SELECT DISTINCT context FROM ".$table." WHERE econtext = '".$code."'";
+    $contexts = $conn->query($sql);
+    while ($context = mysqli_fetch_array($contexts, MYSQLI_NUM)) {
+      //Get number of entries in that context
+      $sql = "SELECT COUNT(context) FROM ".$table." WHERE econtext = '".$code."' AND context = '".$context[0]."'";
+      $entries = mysqli_fetch_array($conn->query($sql))[0];
+
+      //Find if one of them has a photo
+      $photo = "X";
+      $sql = "SELECT filecode FROM ".$table." WHERE econtext = '".$code."' AND context = '".$context[0]."'";
+      $filecodes = $conn->query($sql);
+      while ($filecode = mysqli_fetch_array($filecodes, MYSQLI_NUM)) {
+        if (!empty($filecode[0])) {
+          $photo = "Y";
           break;
         }
       }
-      if (!$exists) {
-        array_push($contextTable,array($data[1],0,"X"));
-        $more = "0";
-        if (ctype_space($data[6])) $more = "1";
-        array_push($artifactTable,array(count($contextTable)-1,$data[7],$data[2],$more));
-        $contextTable[count($contextTable)-1][1] += 1;
-        if (ctype_space($data[0])) {
-          $contextTable[count($contextTable)-1][2] = "Y";
+
+      array_push($contextTable,array($context[0],$entries,$photo));
+    }
+
+    //Populate the artifact tables - a table per each context
+    for ($x=0; $x < count($contextTable); $x++){
+      //Populate an artifact table
+      $artifactTable = array();
+
+      $sql = "SELECT * FROM ".$table." WHERE econtext = '".$code."' AND context = '".$contextTable[$x][0]."'";
+      $artifacts = $conn->query($sql);
+
+      //Store result in array
+      while ($artifact = mysqli_fetch_array($artifacts, MYSQLI_NUM)) {
+        array_push($artifactTable,$artifact);
+      }
+      //Push extra column 0 = no more button
+      array_push($artifactTable,0);
+
+      array_push($artifactTables,$artifactTable);
+    }
+
+    //Populate the more tables and pictures
+    $moreCount = 1;
+    for ($x=0; $x < count($artifactTables); $x++){
+      for ($z=0; $z < count($artifactTables[$x]); $z++){
+        $isPhoto = false;
+        $isMore = false;
+
+        //Check if there is more information
+        if (!empty($artifactTables[$x][$z][7])) {
+          //Get more information
+          $moreTable = array();
+          $moreTableName = strtolower($artifactTables[$x][$z][7]); //Lowercase to work with mysql 5.7
+          $catalog = $artifactTables[$x][$z][8];
+
+          //First push the column names
+          $columns = array();
+          $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$moreTableName."'";
+          $query = $conn->query($sql);
+          while ($col = mysqli_fetch_array($query, MYSQLI_NUM)) {
+            array_push($columns,$col);
+          }
+          array_push($moreTable,$columns);
+
+          //Push the rest of the data
+          $sql = "SELECT * FROM ".$moreTableName." WHERE catalog_no = '".$catalog."'";
+          $more = $conn->query($sql);
+          while ($moreRow = mysqli_fetch_array($more, MYSQLI_NUM)) {
+            array_push($moreTable,$moreRow);
+          }
+
+          array_push($moreTables,$moreTable);
+          $isMore = true;
+        }
+
+        //Check if there is a photo
+        if (!empty($artifactTables[$x][$z][1])) {
+          array_push($morePictures,$artifactTables[$x][$z][1]);
+        }
+
+        //Keep moreTables and morePictures at same length
+        if ($isPhoto || $isMore) {
+          if ($isPhoto) array_push($moreTables,"");
+          if ($isMore) array_push($morePictures,"");
+
+          //Set to more count so JS knows
+          $artifactTables[$x][$z][9] = $moreCount;
+          $moreCount++;
         }
       }
     }
+
     //The output
-    //Context Table: Context|Entries|Photo
-    //Artifact Table: CatNo|Artifacts|More  //More = 1 if there is more
-    //Properties: prov|type|length|width|depth|area|vol
-    foreach ($contextTable as $row) {
-      echo implode("|",$row);
-      echo "]";
-    }
-    echo "[";
-    foreach ($artifactTable as $row) {
-      echo implode("|",$row);
-      echo "]";
-    }
-    echo "[";
-    for ($x=0; $x < count($properties); $x++){
-      if (isset($properties[$x])) echo $properties[$x]."|";
-    }
+    echo json_encode(array($contextTable,$artifactTables,$properties,$moreTables,$morePictures));
   }
+}
 ?>

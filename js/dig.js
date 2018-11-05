@@ -11,9 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   //modal
   var modal = document.getElementById('myModal');
-  var btn = document.getElementById("myBtn");
   var span = document.getElementsByClassName("close")[0];
-  btn.onclick = function() { modal.style.display = "block";}
   //When the user clicks on <span> (x), close the modal
   span.onclick = function() {	modal.style.display = "none";}
 });
@@ -44,25 +42,31 @@ window.addEventListener('wheel',function(){
 });
 
 //Ajax call
-var contextTable, artifactTable, properties;
+var sqcontextTable, sqartifactTable, sqproperties, sqmoreTables, sqpictures;
+var feacontextTable, feaartifactTable, feaproperties, feamoreTables, feapictures;
 function getData(code) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          var data = this.responseText;
-          //Reformat data
-          contextTable = [];
-          artifactTable = [];
-          properties = [];
-          var context = data.split("[")[0].split("]");
-          for (i = 0; i < context.length; ++i) {
-            contextTable.push(context[i].split("|"));
-          }
-          var artifact = data.split("[")[1].split("]");
-          for (i = 0; i < artifact.length; ++i) {
-            artifactTable.push(artifact[i].split("|"));
-          }
-          properties = data.split("[")[2].split("|");
+          var data = jQuery.parseJSON(this.response);
+          var cTable = data[0];
+          var aTable = data[1];
+          var props = data[2];
+					var mTables = data[3];
+					var pics = data[4];
+					if (view == "square") {
+						sqcontextTable = cTable;
+						sqartifactTable = aTable;
+						sqproperties = props;
+						sqmoreTables = mTables;
+						sqpictures = pics;
+					} else {
+						feacontextTable = cTable;
+						feaartifactTable = aTable;
+						feaproperties = props;
+						feamoreTables = mTables;
+						feapictures = pics;
+					}
           update();
       }
   };
@@ -78,37 +82,66 @@ function update() {
   var depth = document.getElementById("ajDepth");
   var volume = document.getElementById("ajVolume");
   var area = document.getElementById("ajArea");
-  title.innerHTML = properties[0];
-  type.innerHTML = properties[1];
-  length.innerHTML = properties[2];
-  width.innerHTML = properties[3];
-  depth.innerHTML = properties[4];
-  area.innerHTML = properties[5];
-  volume.innerHTML = properties[6];
-  generateCTable();
-  generateATable(0);
+	if (view == "square") {
+	  title.innerHTML = sqproperties[0];
+	  type.innerHTML = sqproperties[1];
+	  length.innerHTML = sqproperties[2];
+	  width.innerHTML = sqproperties[3];
+	  depth.innerHTML = sqproperties[4];
+	  area.innerHTML = sqproperties[5];
+	  volume.innerHTML = sqproperties[6];
+	  generateCTable(sqcontextTable);
+	  generateATable(0,sqartifactTable,sqpictures);
+	} else {
+		title.innerHTML = feaproperties[0];
+	  type.innerHTML = feaproperties[1];
+	  length.innerHTML = feaproperties[2];
+	  width.innerHTML = feaproperties[3];
+	  depth.innerHTML = feaproperties[4];
+	  area.innerHTML = feaproperties[5];
+	  volume.innerHTML = feaproperties[6];
+		generateCTable(feacontextTable);
+		generateATable(0,feaartifactTable,feapictures);
+	}
 }
 
-function generateATable(contextID) {
+function generateATable(contextID, artifactTable, pictures) {
+	if (view != "square") {
+		artifactTable = feaartifactTable;
+		pictures = feapictures;
+	} else {
+		artifactTable = sqartifactTable;
+		pictures = sqpictures;
+	}
   var aTable = document.getElementById("artifactTable");
   var table = "<table><tr>";
   table += "<th>Cat No.</th>";
   table += "<th>Artifacts</th>";
+	table += "<th>Picture</th>";
   table += "<th>More</th>";
   table += "</tr>";
-  for (i = 0; i < artifactTable.length; ++i) {
-    if (artifactTable[i][0] == contextID) {
-      table += "<tr>";
-      for (z = 1; z < artifactTable[i].length; ++z) {
-        table += "<td>"+artifactTable[i][z]+"</td>";
-      }
-      table += "</tr>";
-    }
+  for (i = 0; i < artifactTable[contextID].length-1; ++i) {
+    table += "<tr>";
+    table += "<td>"+artifactTable[contextID][i][8]+"</td>";
+		table += "<td>"+artifactTable[contextID][i][3]+"</td>";
+		var more = parseInt(artifactTable[contextID][i][9]);
+		if (more > 0){
+			if (pictures[more]){
+				table += "<td>Y</td>";
+			} else {
+				table += "<td>X</td>";
+			}
+			table += "<td><button onclick='more("+more+")'>More</button></td>";
+		} else {
+			table += "<td>X</td>";
+			table += "<td>X</td>";
+		}
+    table += "</tr>";
   }
   aTable.innerHTML = table;
 }
 
-function generateCTable() {
+function generateCTable(contextTable) {
   var cTable = document.getElementById("contextTable");
   var table = "<table><tr>";
   table += "<th>Context</th>";
@@ -131,6 +164,44 @@ window.onclick = function(event) {
 		if (event.target == modal) {
 				modal.style.display = "none";
 		}
+}
+
+//When the more button is clicked
+function more(index) {
+	if (view == "feature") {
+		pictures = feapictures;
+		moreTables = feamoreTables;
+	}
+	else {
+		pictures = sqpictures;
+		moreTables = sqmoreTables;
+	}
+	var modal = document.getElementById('myModal');
+	var modalEdit = document.getElementById('modalEdit');
+	modal.style.display = "block";
+	var table = "<table><tr>";
+	for (i = 0; i < moreTables[index][0].length; ++i) {
+			table += "<th>"+moreTables[index][0][i]+"</th>";
+	}
+	table += "</tr>";
+
+	//TODO filter out columns
+
+	for (i = 1; i < moreTables[index].length; ++i) {
+		table += "<tr>";
+		for (z = 0; z < moreTables[index][i].length; ++z) {
+			table += "<td>"+moreTables[index][i][z]+"</td>";
+		}
+		table += "</tr>";
+	}
+	table += "</table>";
+
+	var content = table+"<br>";
+	if (pictures[index] != "") {
+		content += "<img src='db/images/"+pictures[index].toString().toLowerCase()+".gif'/>";
+	}
+	modalEdit.innerHTML = content;
+	modal.style.display = "block";
 }
 
 //Used to keep track of the type of square
@@ -209,8 +280,16 @@ function showGrid() {
 //These 3 functions can show the 3 different views
 function viewSquare(info){
 	if (!zooming) {
+		var wasFeature = false;
+		if (view == "feature") {
+			wasFeature = true;
+		}
 		view = "square";
-		zooming = true;
+		if (wasFeature) {
+			update();
+			var svgStyle = document.getElementById("svgMap");
+			svgStyle.style.display = "inline";
+		}
 		var map = document.getElementById("map");
 		var square = document.getElementById("square");
 		var feature = document.getElementById("feature");
@@ -220,31 +299,38 @@ function viewSquare(info){
 		feature.style.display = "none";
 		square.style.display = "inline";
 
-		//Set value for zooming in
-		per = 0;
-		var string = info.split("S")[1];
-		if (string.includes("R")) {
-			var first = parseInt(string.split("R")[0]);
-			var second = parseInt(string.split("R")[1]);
-			if (second == 103) second = 110;
-			first = (first+10)*-1;
-		} else {
-			var first = parseInt(string.split("L")[0]);
-			var second = -10;
-			first = (first+10)*-1;
+		if (!wasFeature) {
+			//Set value for zooming in
+			zooming = true;
+			per = 0;
+			var string = info.split("S")[1];
+			if (string.includes("R")) {
+				var first = parseInt(string.split("R")[0]);
+				var second = parseInt(string.split("R")[1]);
+				if (second == 103) second = 110;
+				first = (first+10)*-1;
+			} else {
+				var first = parseInt(string.split("L")[0]);
+				var second = -10;
+				first = (first+10)*-1;
+			}
+			second = second-10;
+			to = [second,first,10,150]; //viewbox
+			from = [-20, -330, 130, 150]; //viewbox
+			sto = 0.05; //stroke
+			sfrom = 0.3; //stroke
+			hto = 494; //height
+			hfrom = 570; //height
+			mapZoom();
 		}
-		second = second-10;
-		to = [second,first,10,150]; //viewbox
-		from = [-20, -330, 130, 150]; //viewbox
-		sto = 0.05; //stroke
-		sfrom = 0.3; //stroke
-		hto = 494; //height
-		hfrom = 570; //height
-		mapZoom();
 	}
 }
 function viewMap() {
 	if (!zooming) {
+		if (view == "feature") {
+			var svgStyle = document.getElementById("svgMap");
+			svgStyle.style.display = "inline";
+		}
 		view = "map";
 		zooming = true;
 		showGrid();
@@ -272,14 +358,13 @@ function viewMap() {
 	}
 }
 function viewFeature() {
+	view = "feature";
 	var map = document.getElementById("map");
-	var square = document.getElementById("square");
 	var feature = document.getElementById("feature");
 	var artifacts = document.getElementById("artifacts");
 	artifacts.style.display = "inline";
 	map.style.display = "none";
 	feature.style.display = "inline";
-	square.style.display = "none";
 
 	var svgStyle = document.getElementById("svgMap");
 	svgStyle.style.display = "none";
@@ -309,6 +394,12 @@ function square(object,info) {;
 			selectedSquaresObj.push(object);
 		}
 	}
+}
+
+function feature(info) {
+	//TODO: check if feature is fully uncovered
+	getData(info);
+	viewFeature();
 }
 
 //Deselects all squares
