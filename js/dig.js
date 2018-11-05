@@ -186,7 +186,7 @@ function more(index) {
 	if (tableName == "aabeads") {
 		title = "Beads";
 		columnNames = ["Catalog Number","Material","Condition","Manufacture","Size","Shape","Diaphaneity","Color","Count"];
-		indexes = [1,3,4,5,6,7,8,9];
+		indexes = [1,3,4,5,6,7,8,9,10];
 	}
 	if (tableName == "aaceram") {
 		title = "Ceramics";
@@ -230,7 +230,7 @@ function more(index) {
 			table += "<th>"+columnNames[i]+"</th>";
 	}
 	table += "</tr>";
-	for (i = 1; i < moreTables[index].length; ++i) {
+	for (i = 2; i < moreTables[index].length; ++i) {
 		table += "<tr>";
 		for (z = 0; z < indexes.length; ++z) {
 			table += "<td>"+moreTables[index][i][indexes[z]]+"</td>";
