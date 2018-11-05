@@ -54,6 +54,7 @@
 			<div id="sidebar">
 			<!--	<div class="buttons" onclick="viewMap()">Map</div> -->
 				<div id="feature" class="buttons" onclick="viewSquare()">Square</div>
+				<div id="info">
 				<h4>Type: <span id="ajType"></span></h4>
 				<h4>Dimensions:</h4>
 				<h4>  Length: <span id="ajLength"></span> ft</h4>
@@ -62,8 +63,9 @@
 				<h4>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h4>
 				<h4>Area: <span id="ajArea"></span> ft<sup>2</sup></h4>
 			</div>
+			</div>
 			<div id="desc">
-				<h2>Description</h2>
+			<!--	<h2>Description</h2> -->
 			</div>
 		</div>
 		<div id="svgMap">
@@ -4475,18 +4477,18 @@
 		<div id="artifacts">
 			<h1>Artifacts</h1>
 			<div id="contextTable">
-				<table style="width:100%">
-				  <tr>
+				<table id="contextTableTable">
+				  <tr class="artifactrow">
 					<th>Context</th>
 					<th>Entries</th>
 					<th>Photo</th>
 				  </tr>
-				  <tr style="background-color: #c6c6c6">
+				  <tr class="artifactrow" style="background-color: #c6c6c6">
 					<td>Zone 1</td>
 					<td>2</td>
 					<td>X</td>
 				  </tr>
-				  <tr>
+				  <tr class="artifactrow">
 					<td>Posthole #1</td>
 					<td>1</td>
 					<td>Y</td>
@@ -4494,8 +4496,8 @@
 				</table>
 			</div>
 			<div id="artifactTable">
-				<table style="width:100%">
-				  <tr>
+				<table id="artifactTableTable">
+				  <tr class="contextrow">
 					<th>Cat No.</th>
 					<!-- <th>Count</th> -->
 					<th>Artifacts</th>
@@ -4503,7 +4505,7 @@
 					<!-- <th>Photo</th> -->
 					<th>More</th>
 				  </tr>
-				<tr>
+				<tr class="contextrow">
 					<td>Light Fraction</td>
 					<!-- <td>1 bag</td> -->
 					<td>2351w2758</td>
@@ -4512,7 +4514,7 @@
 					<!-- <td></td> -->
 					<!-- <td>=></td> -->
 				  </tr>
-				  <tr>
+				  <tr class="contextrow">
 					<td>Potsherd</td>
 					<!-- <td>1/4"</td> -->
 					<!-- <td>1</td> -->

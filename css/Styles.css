@@ -9,7 +9,7 @@ list-style-type:none;
 overflow:hidden;
 background-color:RGB(44,45,98);
 color: white;
-height:64px;
+height:10%;
 width:100%
 }
 
@@ -61,32 +61,33 @@ body{
 }
 
 #left{
+  position:absolute;
   height: 100%;
   width: 10%;
   background-color:white;
 }
 
 #right{
-  position: relative;
+  position: absolute;
   height: 100%;
   width: 10%;
   left: 90%;
-  top:-100%;
+  top: 10%;
   background-color:white;
 }
 
 #mapbackground{
-  position: relative;
+  position: absolute;
   width:504px;
   height:580px;
   background-color: RGB(102,46,45);
-  left: 33.25%;
-  top: -190.75%;
+  left: 33.4%;
+  top: 17.75%;
 }
 
 .tabs{
-  position:relative;
-  width: 168px;
+  position:absolute;
+  width: 10.9%;
   height: 25px;
   color: white;
   text-align:center;
@@ -99,19 +100,19 @@ body{
 }
 
 #maptab{
-top: -276.5%;
-left: 33.25%;
+top: 14%;
+left: 33.4%;
 border-radius: 5px 5px 0px 0px;
 }
 #squaretab{
-  top: -280.35%;
-  left: 44.4%;
+  top: 14%;
+  left: 44.525%;
   border-radius: 5px 5px 0px 0px;
 }
 
 #featuretab{
-  top: -284.25%;
-  left: 55.6%;
+  top: 14%;
+  left: 55.65%;
   border-radius: 5px 5px 0px 0px;
 }
 
@@ -123,6 +124,50 @@ background-color:#98a7b7;
 line-height:128px
 }
 
+
+#contextTable {
+display:inline-block;
+margin-left:3%;
+margin-right:3%;
+position: absolute;
+left: 65%;
+top:30%;
+overflow-y: auto;
+height: 100;
+width: 300;
+}
+
+#contextTableTable{
+  height: auto;
+  width: 300;
+}
+
+#artifactTable {
+position: absolute;
+width:300;
+height: 200;
+overflow-y: auto;
+display:inline-block;
+left: 68%;
+top: 50%;
+}
+
+#artifactTableTable{
+  height: auto;
+  width: 300;
+}
+
+tr{
+  height:20;
+}
+
+.contextrow{
+  height:20;
+}
+
+.artifactrow{
+  height:20;
+}
 
 .other-buttons {
 font-size:20px;
@@ -229,17 +274,13 @@ width:100%;
 display:none
 }
 
-#contextTable {
-width:30%;
-display:inline-block;
-margin-left:3%;
-margin-right:3%
+#info{
+  position: absolute;
+  top: 20%;
+  left: 10%;
+
 }
 
-#artifactTable {
-width:60%;
-display:inline-block
-}
 
 h1 {
 text-align:center
