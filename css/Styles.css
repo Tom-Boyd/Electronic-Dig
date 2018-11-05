@@ -140,6 +140,9 @@ width: 300;
 #contextTableTable{
   height: auto;
   width: 300;
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
 }
 
 #artifactTable {
@@ -155,18 +158,26 @@ top: 50%;
 #artifactTableTable{
   height: auto;
   width: 300;
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+}
+
+
+tr:hover{
+  background-color: gray;
 }
 
 tr{
-  height:20;
+  height:30;
 }
 
 .contextrow{
-  height:20;
+  height:30;
 }
 
 .artifactrow{
-  height:20;
+  height:30;
 }
 
 .other-buttons {
