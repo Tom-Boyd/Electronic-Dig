@@ -41,10 +41,27 @@
 		    background: #4CAF50;
 		    cursor: pointer;
 		}
+		.other-buttons {
+		    background-color: #994d00;
+		    border: none;
+		    color: black;
+		    padding: 10px 20px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    margin: 4px 2px;
+		    cursor: pointer;
+		    border-radius: 16px;
+		}
+
+		.other-buttons:hover {
+		    background-color: #cc6600;
+		}
 		</style>
 </head>
 
 <body>
+<center>
 	<script src="js/home.js"></script>
 	<nav>
 		<ul>
@@ -53,10 +70,10 @@
 		</ul>
 	</nav>
 	<main>
-		<div id="first">
+ 	<div id="first">
 			<a href="#" class="other-buttons" onclick="tutPri()">Primer</a>
 			<a href="#" class="other-buttons" onclick="tutPri()">Tutorial</a>
-			<a href="dig.html" id="start" onclick="start()">Start</a>
+			<a href="dig.html" class="other-buttons" id="start" onclick="start()">Start</a>
 			<p>Set Your Budget</p>
 			<div class="slidecontainer">
 				<input type="range" min="1" max="50000" value="20000" class="slider" id="myRange">
@@ -83,6 +100,7 @@
 		  output.innerHTML = this.value;
 		}
 	</script>
+	</center>
 </body>
 
 
