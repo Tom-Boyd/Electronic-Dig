@@ -193,6 +193,14 @@ main a:hover,#start:hover {
 background-color:#7994b2
 }
 
+#excavateFeatureTooltip{
+  width: 70px;
+  height: 30px;
+  background-color: black;
+  color: white;
+  visibility: hidden;
+}
+
 #other div {
 font-size:40px;
 width:100%;
