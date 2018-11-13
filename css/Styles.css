@@ -219,6 +219,10 @@ background-color:#7994b2
   border-radius: 5px;
 }
 
+#myModal{
+  border-radius: 5px;
+}
+
 #other div {
 font-size:40px;
 width:100%;
