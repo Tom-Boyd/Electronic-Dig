@@ -118,12 +118,25 @@ border-radius: 5px 5px 0px 0px;
 
 #start {
 font-size:40px;
-width:100%;
-height:128px;
+width:90%;
+height:8%;
 background-color:#98a7b7;
-line-height:128px
+line-height:175%;
+border-radius: 100px;
 }
 
+#title{
+  position: absolute;
+  font-size: 24pt;
+  font-family: 'Open Sans', sans-serif;
+
+}
+#subtitle{
+  position: absolute;
+  font-size: 20pt;
+  top: 3.5%;
+  font-family: 'Acme', sans-serif;
+}
 
 #contextTable {
 display:inline-block;
@@ -183,10 +196,10 @@ tr{
 .other-buttons {
 font-size:20px;
 margin:16px auto;
-width:50%;
-height:64px;
+width:40%;
+height:4%;
 background-color:#bfd6ef;
-line-height:64px
+line-height:175%
 }
 
 main a:hover,#start:hover {
@@ -198,7 +211,12 @@ background-color:#7994b2
   height: 30px;
   background-color: black;
   color: white;
-  visibility: hidden;
+  display: none;
+  position: absolute;
+}
+
+.modal{
+  border-radius: 5px;
 }
 
 #other div {
@@ -233,13 +251,13 @@ background-color:#98a7b7
 .buttons {
 
 background-color: RGB(102,46,45);
-height:10%;
+height:9%;
 width:75%;
 padding:5%;
 text-align:center;
 margin-top:16px;
 line-height:25px;
-  border-radius: 5px;
+  border-radius: 35px;
   color:white;
 }
 

@@ -7,6 +7,9 @@
 	<title>Electronic Dig</title>
 	<link rel="stylesheet" href="css/Styles.css">
 	<style>
+@import url('https://fonts.googleapis.com/css?family=Acme');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 		.slidecontainer {
 		    width: 100%;
 		}
@@ -20,6 +23,7 @@
 		    opacity: 0.7;
 		    -webkit-transition: .2s;
 		    transition: opacity .2s;
+				border-radius: 35px;
 		}
 
 		.slider:hover {
@@ -44,15 +48,18 @@
 		.other-buttons {
 		    background-color: #994d00;
 		    border: none;
+
 		    color: black;
-		    padding: 10px 20px;
+		    padding: 1px 2px;
 		    text-align: center;
 		    text-decoration: none;
 		    display: inline-block;
 		    margin: 4px 2px;
 		    cursor: pointer;
-		    border-radius: 16px;
+		    border-radius: 35px;
 		}
+
+
 
 		.other-buttons:hover {
 		    background-color: #cc6600;
@@ -66,7 +73,8 @@
 	<nav>
 		<ul>
 			<li><a href="https://rla.unc.edu/dig/">Main Menu</a></li>
-			<li><h1>Occaneechi Town Electronic Dig</h1></li>
+			<li><h1 id="title">OCCANEECHI TOWN</h1></li>
+			<li><h1 id="subtitle">ELECTRONIC DIG</h1></li>
 		</ul>
 	</nav>
 	<main>
@@ -79,7 +87,7 @@
 				<input type="range" min="1" max="50000" value="20000" class="slider" id="myRange">
 				<p>Budget: <span id="demo"></span></p>
 			</div>
-			
+
 			<p><input type="checkbox" id="unlimited" onclick="budgetToggle()" checked> Use unlimited budget</p>
 
 			<a class="other-buttons">Continue</a>
@@ -102,5 +110,3 @@
 	</script>
 	</center>
 </body>
-
-

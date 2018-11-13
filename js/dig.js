@@ -1,3 +1,6 @@
+var tooltipOn;
+
+
 // EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", function(event) {
   //Declare DOM global variables
@@ -28,6 +31,17 @@ window.addEventListener('mouseover',function(){
 			}
 		}
 	}
+	//tooltip
+	parent=  event.target.parentElement;
+	var tooltip = document.getElementById('excavateFeatureTooltip');
+	if( event.target !=  tooltipOn){
+	if(parent.id=="Features"){
+		tooltip.style.display = "inline";
+		tooltip.style.left = event.screenX;
+		tooltip.style.top = event.screenY;
+		tooltipOn=  event.target;
+}
+}
 });
 window.addEventListener('wheel',function(){
   //Allows scroll wheel to enter and exit a square
