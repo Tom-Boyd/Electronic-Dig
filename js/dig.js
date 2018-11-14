@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	svgStyle = document.getElementById("svgMap");
 	lines = document.querySelectorAll("svg *");
 
+	//set Budget
+	setBudget(localStorage.getItem("budget"));
+
 	//Show map
 	var svgMap = document.getElementById("svgMap");
 	svgMap.style.display = "inline";
@@ -32,16 +35,18 @@ window.addEventListener('mouseover',function(){
 		}
 	}
 	//tooltip
-	parent=  event.target.parentElement;
-	var tooltip = document.getElementById('excavateFeatureTooltip');
-	if( event.target !=  tooltipOn){
-	if(parent.id=="Features"){
-		tooltip.style.display = "inline";
-		tooltip.style.left = event.screenX;
-		tooltip.style.top = event.screenY;
-		tooltipOn=  event.target;
-}
-}
+	parent = event.target.parentElement;
+	if (parent) {
+		var tooltip = document.getElementById('excavateFeatureTooltip');
+		if( event.target !=  tooltipOn){
+			if(parent.id=="Features"){
+				tooltip.style.display = "inline";
+				tooltip.style.left = event.screenX;
+				tooltip.style.top = event.screenY;
+				tooltipOn=  event.target;
+			}
+		}
+	}
 });
 window.addEventListener('wheel',function(){
   //Allows scroll wheel to enter and exit a square
@@ -55,7 +60,57 @@ window.addEventListener('wheel',function(){
 	}
 });
 
-//Ajax call
+//Budget
+var budget = -1;
+var rate = 10; //in dollars per hour
+function formatBudget(val) {
+	var budgetString = "$"+val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return budgetString;
+}
+function setBudget(val) {
+	budget = val;
+	element = document.getElementById("budget");
+	if (val == "-1") element.innerHTML = "Unlimited";
+	else element.innerHTML = formatBudget(val);
+}
+function updateBudget(newBudget) {
+	if (budget != newBudget) {
+		difference = budget - newBudget;
+		setBudget(newBudget);
+		//do minus animation
+		element = document.getElementsByClassName("budgetAnim")[0];
+		animate = element.cloneNode(false);
+		element.parentElement.appendChild(animate);
+		element.innerHTML = "-"+formatBudget(difference);
+		element.style.top = "50px";
+		element.style.opacity = "0";
+		setTimeout(function(){
+			element = document.getElementsByClassName("budgetAnim")[0];
+			element.remove();
+		}, 2000);
+	}
+}
+
+//Info box
+var log = [];
+function updateInfo(info) {
+	element = document.getElementById("infoText");
+	element.innerHTML = info+"<br>"+element.innerHTML;
+	log.push(info)
+}
+
+//Ajax calls
+var cost = 0;
+function getCost(code) {
+	var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+			cost = parseInt(this.response)*rate;
+    }
+  };
+  xmlhttp.open("GET", "php/connection.php?codeCost=" + code, false);
+  xmlhttp.send();
+}
 var sqcontextTable, sqartifactTable, sqproperties, sqmoreTables, sqpictures;
 var feacontextTable, feaartifactTable, feaproperties, feamoreTables, feapictures;
 function getData(code) {
@@ -280,18 +335,24 @@ document.body.onmouseup = function() {
 var unselectedSquares;
 function random() {
 	var number = prompt("Enter number of squares to select", 0);
-	var squares = document.querySelectorAll("#GRID_UNITS a");
-	unselectedSquares = [];
-	for (i = 0; i < squares.length; ++i) {
-		if (!(selectedSquaresObj.includes(squares[i]) || excavatedSquaresObj.includes(squares[i]))){
-			unselectedSquares.push(squares[i]);
+	if (number > 0){
+		var squares = document.querySelectorAll("#GRID_UNITS a");
+		unselectedSquares = [];
+		for (i = 0; i < squares.length; ++i) {
+			if (!(selectedSquaresObj.includes(squares[i]) || excavatedSquaresObj.includes(squares[i]))){
+				unselectedSquares.push(squares[i]);
+			}
 		}
-	}
-	if (number > unselectedSquares.length) number = unselectedSquares.length;
-	for (i=0;i<number;i++){
-		var x = Math.floor(Math.random() * unselectedSquares.length);
-		unselectedSquares[x].onclick();
-		remove(unselectedSquares,unselectedSquares[x]);
+		if (number > unselectedSquares.length) number = unselectedSquares.length;
+		running = true;
+		for (i=0;i<number;i++){
+			var x = Math.floor(Math.random() * unselectedSquares.length);
+			unselectedSquares[x].onclick();
+			remove(unselectedSquares,unselectedSquares[x]);
+		}
+		if (number == 1) updateInfo("Randomly selected 1 square");
+		else updateInfo("Randomly selected "+number+" squares");
+		running = false;
 	}
 }
 
@@ -434,11 +495,12 @@ var selectedSquares = [];
 var selectedSquaresObj = [];
 var excavatedSquares = [];
 var excavatedSquaresObj = [];
-function square(object,info) {;
+function square(object,info) {
 	if(selectedSquaresObj.includes(object)) { //deselect
 		object.firstChild.style.fill= "url(#imgGrass)";
 		remove(selectedSquares, info);
 		remove(selectedSquaresObj, object);
+		if (!running) updateInfo("Squares selected: "+selectedSquares.length);
 	} else {
 		if(excavatedSquaresObj.includes(object)) {
 			if (info != 'null') {
@@ -449,21 +511,56 @@ function square(object,info) {;
 			object.firstChild.style.fill= "url(#imgGrassSelected)";
 			selectedSquares.push(info);
 			selectedSquaresObj.push(object);
+			if (!running) updateInfo("Squares selected: "+selectedSquares.length);
 		}
 	}
 }
 
+var featuredExcavated = []
 function feature(info) {
 	//TODO: check if feature is fully uncovered
-	getData(info);
-	viewFeature();
+	//budget
+	if (budget != -1) {
+		if (featuredExcavated.includes(info)) {
+			getData(info);
+			viewFeature();
+		} else {
+			getCost(info)
+			var newBudget = budget;
+			if (cost <= newBudget) {
+				newBudget -= cost;
+				getData(info);
+				viewFeature();
+				updateBudget(newBudget);
+				featuredExcavated.push(info)
+				updateInfo("You have excavated a feature for "+formatBudget(cost));
+			} else {
+				updateInfo("Not enough money to excavate!");
+			}
+		}
+	} else {
+		getData(info);
+		viewFeature();
+	}
 }
 
 //Deselects all squares
+var running = false;
 function deselect() {
-	for (var i = selectedSquares.length-1; i>=0; i--){
-		selectedSquaresObj[i].onclick();
+	while (selectedSquares.length != 0) {
+		var num = selectedSquares.length;
+		if (num == 0) {
+			updateInfo("No squares selected to deselect");
+		} else {
+			running = true;
+			var arr = selectedSquaresObj.slice();
+			for (var i = num-1; i>=0; i--){
+				arr[i].onclick();
+			}
+			running = false;
+		}
 	}
+	updateInfo("All squares were deselected");
 }
 
 //Removes element from array
@@ -478,11 +575,40 @@ function remove(list,value) {
 //Excavates all the squares selected
 function excavateSquare() {
 	var num = selectedSquares.length;
-	for (i = 0; i< num; i++){
-		selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
-		excavatedSquares.push(selectedSquares[i]);
-		excavatedSquaresObj.push(selectedSquaresObj[i]);
+	if (num == 0) {
+		updateInfo("No squares selected to excavate");
+	} else {
+		var newBudget = budget;
+		for (i = 0; i< num; i++){
+			//budget
+			if (budget != -1){
+				cost = 40 * rate;
+				if (cost <= newBudget) {
+					newBudget -= cost;
+				} else {
+					updateInfo("Not enough money to excavate further!");
+					break;
+				}
+			}
+			selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
+			excavatedSquares.push(selectedSquares[i]);
+			excavatedSquaresObj.push(selectedSquaresObj[i]);
+		}
+		if (i != 0) {
+			if (budget != -1) {
+				if (i == 1) updateInfo("You have excavated "+i+" square for "+formatBudget(budget-newBudget));
+				else updateInfo("You have excavated "+i+" squares for "+formatBudget(budget-newBudget));
+				updateBudget(newBudget);
+			} else {
+				if (i == 1) updateInfo("You have excavated "+i+" square");
+				else updateInfo("You have excavated "+i+" squares");
+			}
+			selectedSquares = selectedSquares.diff(excavatedSquares);
+			selectedSquaresObj = selectedSquaresObj.diff(excavatedSquaresObj);
+		}
 	}
-	selectedSquares = [];
-	selectedSquaresObj = [];
 }
+
+Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
+};

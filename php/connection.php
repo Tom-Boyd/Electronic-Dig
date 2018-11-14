@@ -14,6 +14,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     die("Connection failed: " . mysqli_connect_error());
   }
 
+  //Gets Cost to excavate
+  if (isset($_GET["codeCost"])) {
+    $code = mysqli_real_escape_string($conn, $_GET["codeCost"]); //For security
+    $sql = "SELECT hours FROM masterls WHERE UPPER(code) = '".$code."' limit 1";
+    $query = $conn->query($sql);
+    if (!$query) printf("Error: %s\n", mysqli_error($conn));
+    echo mysqli_fetch_array($query)[0];
+  }
+
   //Gets Info about a square or feature
   if (isset($_GET["code"])) {
     $code = mysqli_real_escape_string($conn, $_GET["code"]); //For security

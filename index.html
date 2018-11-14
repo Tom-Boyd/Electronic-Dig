@@ -78,35 +78,20 @@
 		</ul>
 	</nav>
 	<main>
- 	<div id="first">
+ 		<div id="first">
 			<a href="#" class="other-buttons" onclick="tutPri()">Primer</a>
 			<a href="#" class="other-buttons" onclick="tutPri()">Tutorial</a>
-			<a href="dig.html" class="other-buttons" id="start" onclick="start()">Start</a>
 			<p>Set Your Budget</p>
 			<div class="slidecontainer">
-				<input type="range" min="1" max="50000" value="20000" class="slider" id="myRange">
-				<p>Budget: <span id="demo"></span></p>
+				<input type="range" step="500" min="10000" max="100000" value="20000" class="slider" id="myRange">
+				<p>Budget: <span id="val"></span></p>
 			</div>
-
-			<p><input type="checkbox" id="unlimited" onclick="budgetToggle()" checked> Use unlimited budget</p>
-
-			<a class="other-buttons">Continue</a>
+			<a href="#" class="other-buttons" id="start" onclick="start()">Start</a>
 		</div>
 		<div id="other">
 			<div><h1>Tutorial or Primer</h1></div>
 			<a href="#" class="other-buttons" onclick="back()">Go Back</a>
 		</div>
 	</main>
-
-	 <!-- slider script -->
-	<script>
-		var slider = document.getElementById("myRange");
-		var output = document.getElementById("demo");
-		output.innerHTML = slider.value;
-
-		slider.oninput = function() {
-		  output.innerHTML = this.value;
-		}
-	</script>
 	</center>
 </body>

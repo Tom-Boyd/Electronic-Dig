@@ -21,7 +21,7 @@
 			<li><a href="https://rla.unc.edu/dig/">Main Menu</a></li>
 			<li><h1 id="title">OCCANEECHI TOWN</h1></li>
 			<li><h1 id="subtitle">ELECTRONIC DIG</h1></li>
-			<li style="float:right;margin-right:16px;">Budget: $20,000</li>
+			<li style="float:right;margin-right:16px;">Budget: <span id="budget"></span><span class="budgetAnim"></span></li>
 			<li class="dropdown">
 		    <a class="dropbtn">&#9776; Help</i>
 		    </a>
@@ -41,34 +41,34 @@
 	<div id="squaretab" class="tabs">Square</div>
 	<div id="featuretab" class="tabs">Feature</div>
 	<main>
-
-
-
+		<div id="infoBox">
+			<h2>Information</h2>
+			<span id="infoText"></span>
+		</div>
 		<div id="map">
-
 			<div id="sidebar">
 				<div id="Exbutton" class="buttons" onclick="excavateSquare()">Excavate</div>
 				<div id="Debutton" class="buttons" onclick="deselect()">Deselect</div>
 				<div id="Rabutton" class="buttons" onclick="random()">Random</div>
-                <a id="Rebutton" class="buttons" href="index.html">Reset</a></div>
+        <a id="Rebutton" class="buttons" href="index.html">Reset</a>
 			</div>
 		</div>
 		<div id="square">
-			<h1 id="ajTitle">Square No.</h1>
 			<div class="block"></div>
 			<div id="sidebar">
 			<!--	<div class="buttons" onclick="viewMap()">Map</div> -->
 				<div id="feature" class="buttons" onclick="viewSquare()">Square</div>
 				<div id="info">
-				<h4>Type: <span id="ajType"></span></h4>
-				&nbsp;
-				<h4>Dimensions</h4>
-				<h5>  Length: <span id="ajLength"></span> ft</h5>
-				<h5>  Width: <span id="ajWidth"></span> ft</h5>
-				<h5>  Depth: <span id="ajDepth"></span> ft</h5>
-				<h5>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h5>
-				<h5>Area: <span id="ajArea"></span> ft<sup>2</sup></h5>
-			</div>
+					<h3 id="ajTitle"></h3>
+					<h4>Type: <span id="ajType"></span></h4>
+					&nbsp;
+					<h4>Dimensions</h4>
+					<h5>  Length: <span id="ajLength"></span> ft</h5>
+					<h5>  Width: <span id="ajWidth"></span> ft</h5>
+					<h5>  Depth: <span id="ajDepth"></span> ft</h5>
+					<h5>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h5>
+					<h5>Area: <span id="ajArea"></span> ft<sup>2</sup></h5>
+				</div>
 			</div>
 			<div id="desc">
 			<!--	<h2>Description</h2> -->
