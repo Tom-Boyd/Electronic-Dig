@@ -100,6 +100,17 @@ function updateInfo(info) {
 }
 
 //Ajax calls
+var squares = [];
+function getSquares(code) {
+	var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+			squares = jQuery.parseJSON(this.response);
+    }
+  };
+  xmlhttp.open("GET", "php/connection.php?codeFeat=" + code, false);
+  xmlhttp.send();
+}
 var cost = 0;
 function getCost(code) {
 	var xmlhttp = new XMLHttpRequest();
@@ -518,24 +529,36 @@ function square(object,info) {
 
 var featuredExcavated = []
 function feature(info) {
-	//TODO: check if feature is fully uncovered
 	//budget
 	if (budget != -1) {
 		if (featuredExcavated.includes(info)) {
 			getData(info);
 			viewFeature();
 		} else {
-			getCost(info)
-			var newBudget = budget;
-			if (cost <= newBudget) {
-				newBudget -= cost;
-				getData(info);
-				viewFeature();
-				updateBudget(newBudget);
-				featuredExcavated.push(info)
-				updateInfo("You have excavated a feature for "+formatBudget(cost));
+			//check if uncovered
+			getSquares(info);
+			var uncovered = true;
+			for (i = 0; i < squares.length; ++i) {
+				if(!excavatedSquares.includes(squares[i])){
+					uncovered = false;
+					break;
+				}
+			}
+			if (!uncovered) {
+				updateInfo("This feature is not fully uncovered");
 			} else {
-				updateInfo("Not enough money to excavate!");
+				getCost(info)
+				var newBudget = budget;
+				if (cost <= newBudget) {
+					newBudget -= cost;
+					getData(info);
+					viewFeature();
+					updateBudget(newBudget);
+					featuredExcavated.push(info)
+					updateInfo("You have excavated a feature for "+formatBudget(cost));
+				} else {
+					updateInfo("Not enough money to excavate!");
+				}
 			}
 		}
 	} else {

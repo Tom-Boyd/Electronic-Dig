@@ -14,6 +14,23 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     die("Connection failed: " . mysqli_connect_error());
   }
 
+  //Get squares feature is on
+  if (isset($_GET["codeFeat"])) {
+    $code = mysqli_real_escape_string($conn, $_GET["codeFeat"]); //For security
+    $sql = "SELECT assoc FROM masterls WHERE UPPER(code) = '".$code."' limit 1";
+    $query = $conn->query($sql);
+    if (!$query) printf("Error: %s\n", mysqli_error($conn));
+    $result = mysqli_fetch_array($query)[0];
+    $squares = explode(",",$result);
+    $codes = array();
+    for ($x=0; $x < count($squares); $x++){
+      if (strpos($squares[$x], 'Sq.') !== false) {
+          array_push($codes,"S".trim(explode(".",$squares[$x])[1]));
+      }
+    }
+    echo json_encode($codes);
+  }
+
   //Gets Cost to excavate
   if (isset($_GET["codeCost"])) {
     $code = mysqli_real_escape_string($conn, $_GET["codeCost"]); //For security
