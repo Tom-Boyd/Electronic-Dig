@@ -86,12 +86,12 @@ img {vertical-align: middle;}
 }
 
 @-webkit-keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
 
 @keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
 
@@ -121,7 +121,7 @@ img {vertical-align: middle;}
 	<script src="js/dig.js"></script>
 	<nav>
 		<ul>
-			<li><a href="https://rla.unc.edu/dig/">Main Menu</a></li>
+			<li><a href="https://rla.unc.edu/dig/" style="color:white;">Main Menu</a></li>
 			<li><h1 id="title">OCCANEECHI TOWN</h1></li>
 			<li><h1 id="subtitle">ELECTRONIC DIG</h1></li>
 			<li style="float:right;margin-right:16px;">Budget: <span id="budget"></span><span class="budgetAnim"></span></li>
@@ -137,7 +137,7 @@ img {vertical-align: middle;}
 		  </li>
 		</ul>
 	</nav>
-	
+
 	<div id="left"></div>
 	<div id= "right"></div>
 	<div id="mapbackground"></div>
@@ -146,11 +146,12 @@ img {vertical-align: middle;}
 	<div id="featuretab" class="tabs">Feature</div>
 	<main>
 		<div id="infoBox">
-			<h2>Information</h2>
+			<h2>Log</h2>
 			<span id="infoText"></span>
 		</div>
 		<div id="map">
 			<div id="sidebar">
+        <h2 id= "tools"> Tools </h2>
 				<div id="Exbutton" class="buttons" onclick="excavateSquare()">Excavate</div>
 				<div id="Debutton" class="buttons" onclick="deselect()">Deselect</div>
 				<div id="Rabutton" class="buttons" onclick="random()">Random</div>
@@ -4585,7 +4586,7 @@ img {vertical-align: middle;}
 		 </svg></div>
 	</main>
 		<div id="artifacts">
-			<h1>Artifacts</h1>
+			<h1 style="padding-top:2px; padding-bottom: 2px;">Artifacts</h1>
 			<div id="contextTable">
 				<table id="contextTableTable">
 				  <tr class="artifactrow">
@@ -4669,9 +4670,9 @@ img {vertical-align: middle;}
 				<br>
 
 				<div style="text-align:center">
-				  <span class="dot" onclick="currentSlide(1)"></span> 
-				  <span class="dot" onclick="currentSlide(2)"></span> 
-				  <span class="dot" onclick="currentSlide(3)"></span> 
+				  <span class="dot" onclick="currentSlide(1)"></span>
+				  <span class="dot" onclick="currentSlide(2)"></span>
+				  <span class="dot" onclick="currentSlide(3)"></span>
 				</div>
 	 	 </div>
 <div class="tooltip" id="excavateFeatureTooltip">Click to excavate this feature!</div>
