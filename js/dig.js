@@ -228,7 +228,7 @@ function generateCTable(contextTable) {
   table += "<th>Entries</th>";
   table += "<th>Photo</th>";
   table += "</tr>";
-  for (i = 0; i < contextTable.length-1; ++i) {
+  for (i = 0; i < contextTable.length; ++i) {
     table += "<tr onclick='generateATable("+i+")'>";
     for (z = 0; z < contextTable[i].length; ++z) {
       table += "<td>"+contextTable[i][z]+"</td>";
