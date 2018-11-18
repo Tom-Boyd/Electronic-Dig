@@ -203,7 +203,8 @@ height: 35%;
 overflow-y: auto;
 display:inline-block;
 left:.5%;
-top: 55%;
+top: 65%;
+padding-top: 2%;
 }
 
 #artifactTableTable{
