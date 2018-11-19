@@ -138,48 +138,11 @@ img {vertical-align: middle;}
 		</ul>
 	</nav>
 
-	<div id="left"></div>
-	<div id= "right"></div>
-	<div id="mapbackground"></div>
-	<div id="maptab" class="tabs" onclick="viewMap()">Map</div>
-	<div id="squaretab" class="tabs">Square</div>
-	<div id="featuretab" class="tabs">Feature</div>
-	<main>
-		<div id="infoBox">
-			<h2>Log</h2>
-			<span id="infoText"></span>
-		</div>
-		<div id="map">
-			<div id="sidebar">
-        <h2 id= "tools"> Tools </h2>
-				<div id="Exbutton" class="buttons" onclick="excavateSquare()">Excavate</div>
-				<div id="Debutton" class="buttons" onclick="deselect()">Deselect</div>
-				<div id="Rabutton" class="buttons" onclick="random()">Random</div>
-        <a id="Rebutton" class="buttons" href="index.html">Reset</a>
-			</div>
-		</div>
-		<div id="square">
-			<div class="block"></div>
-			<div id="sidebar">
-			<!--	<div class="buttons" onclick="viewMap()">Map</div> -->
-				<div id="feature" class="buttons" onclick="viewSquare()">Square</div>
-				<div id="info">
-					<h3 id="ajTitle"></h3>
-					<h4>Type: <span id="ajType"></span></h4>
-					&nbsp;
-					<h4>Dimensions</h4>
-					<h5>  Length: <span id="ajLength"></span> ft</h5>
-					<h5>  Width: <span id="ajWidth"></span> ft</h5>
-					<h5>  Depth: <span id="ajDepth"></span> ft</h5>
-					<h5>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h5>
-					<h5>Area: <span id="ajArea"></span> ft<sup>2</sup></h5>
-				</div>
-			</div>
-			<div id="desc">
-			<!--	<h2>Description</h2> -->
-			</div>
-		</div>
-		<div id="svgMap">
+  <div id="main-container">
+    <div id="maptab" class="tabs" onclick="viewMap()">MAP</div>
+  	<div id="squaretab" class="tabs" onclick="viewSquare()">SQUARE</div>
+  	<div id="featuretab" class="tabs">FEATURE</div>
+    <div id="svgMap">
 			<svg id="svg" viewBox="-20 -330  130 150" xmlns="http://www.w3.org/2000/svg" version="1.0" overflow="hidden">
 		  <defs>
 		   <g id="ID__#42_Model_Space"></g>
@@ -4584,9 +4547,32 @@ img {vertical-align: middle;}
 		   </g>
 		  </g>
 		 </svg></div>
-	</main>
-		<div id="artifacts">
-			<h1 style="padding-top:2px; padding-bottom: 2px;">Artifacts</h1>
+    <div id="mapbackground"></div>
+    <div id="sidebar">
+      <div id="map">
+        <h2 class="sideTitle">TOOLS</h2>
+        <div class="buttons" onclick="excavateSquare()">EXCAVATE</div>
+        <div class="buttons" onclick="deselect()">DESELECT</div>
+        <div class="buttons" onclick="random()">RANDOM</div>
+        <a href="index.html"><div class="buttons">RESET</div></a>
+      </div>
+      <div id="info">
+        <h2 class="sideTitle" id="ajTitle"></h3>
+        <h4>Type: <span id="ajType"></span></h4>
+        <h4>Dimensions</h4>
+        <h5>  Length: <span id="ajLength"></span> ft</h5>
+        <h5>  Width: <span id="ajWidth"></span> ft</h5>
+        <h5>  Depth: <span id="ajDepth"></span> ft</h5>
+        <h5>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h5>
+        <h5>Area: <span id="ajArea"></span> ft<sup>2</sup></h5>
+      </div>
+    </div>
+    <div id="infoBox">
+			<h2 class="sideTitle">LOG</h2>
+			<div id="infoText"></div>
+		</div>
+    <div id="artifacts">
+			<h2 class="sideTitle">ARTIFACTS</h2>
 			<div id="contextTable">
 				<table id="contextTableTable">
 				  <tr class="artifactrow">
@@ -4636,6 +4622,8 @@ img {vertical-align: middle;}
 				</table>
 			</div>
 		</div>
+  </div>
+
 		<!-- The Modal -->
 		<div id="myModal" class="modal">
 

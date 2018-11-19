@@ -194,14 +194,14 @@ function generateATable(contextID, artifactTable, pictures) {
 		pictures = sqpictures;
 	}
   var aTable = document.getElementById("artifactTable");
-  var table = "<table><tr>";
+  var table = "<table id='artifactTableTable'><tr class='contextrow'>";
   table += "<th>Cat No.</th>";
   table += "<th>Artifacts</th>";
 	table += "<th>Picture</th>";
   table += "<th>More</th>";
   table += "</tr>";
   for (i = 0; i < artifactTable[contextID].length-1; ++i) {
-    table += "<tr>";
+    table += "<tr class='contextrow'>";
     table += "<td>"+artifactTable[contextID][i][8]+"</td>";
 		table += "<td>"+artifactTable[contextID][i][3]+"</td>";
 		var more = parseInt(artifactTable[contextID][i][9]);
@@ -223,13 +223,13 @@ function generateATable(contextID, artifactTable, pictures) {
 
 function generateCTable(contextTable) {
   var cTable = document.getElementById("contextTable");
-  var table = "<table><tr>";
+  var table = "<table id='contextTableTable'><tr class='artifactrow'>";
   table += "<th>Context</th>";
   table += "<th>Entries</th>";
   table += "<th>Photo</th>";
   table += "</tr>";
   for (i = 0; i < contextTable.length; ++i) {
-    table += "<tr onclick='generateATable("+i+")'>";
+    table += "<tr class='artifactrow' onclick='generateATable("+i+")'>";
     for (z = 0; z < contextTable[i].length; ++z) {
       table += "<td>"+contextTable[i][z]+"</td>";
     }
@@ -420,15 +420,19 @@ function viewSquare(info){
 			svgStyle.style.display = "inline";
 		}
 		var map = document.getElementById("map");
-		var square = document.getElementById("square");
-		var feature = document.getElementById("feature");
+		var square = document.getElementById("info");
 		var artifacts = document.getElementById("artifacts");
+		var squtab = document.getElementById("squaretab");
+		var maptab = document.getElementById("maptab");
+		var featab = document.getElementById("featuretab");
+		featab.style.backgroundColor = "rgb(98, 98, 99)";
+		maptab.style.pointerEvents = "auto";
+		squtab.style.backgroundColor = "RGB(181,139,114)";
 		artifacts.style.display = "inline";
 		map.style.display = "none";
-		feature.style.display = "none";
 		square.style.display = "inline";
 
-		if (!wasFeature) {
+		if (!wasFeature && info) {
 			//Set value for zooming in
 			zooming = true;
 			per = 0;
@@ -448,8 +452,8 @@ function viewSquare(info){
 			from = [-20, -330, 130, 150]; //viewbox
 			sto = 0.05; //stroke
 			sfrom = 0.3; //stroke
-			hto = 494; //height
-			hfrom = 570; //height
+			hto = 520; //height
+			hfrom = 582; //height
 			mapZoom();
 		}
 	}
@@ -464,12 +468,17 @@ function viewMap() {
 		zooming = true;
 		showGrid();
 		var map = document.getElementById("map");
-		var square = document.getElementById("square");
-		var feature = document.getElementById("feature");
+		var square = document.getElementById("info");
 		var artifacts = document.getElementById("artifacts");
+		var squtab = document.getElementById("squaretab");
+		var featab = document.getElementById("featuretab");
+		var maptab = document.getElementById("maptab");
+		maptab.style.pointerEvents = "none";
+		squtab.style.pointerEvents = "none";
+		featab.style.backgroundColor = "rgb(98, 98, 99)";
+		squtab.style.backgroundColor = "rgb(98, 98, 99)";
 		artifacts.style.display = "none";
 		map.style.display = "inline";
-		feature.style.display = "none";
 		square.style.display = "none";
 
 		//Reverses all values for map zooming
@@ -489,11 +498,13 @@ function viewMap() {
 function viewFeature() {
 	view = "feature";
 	var map = document.getElementById("map");
-	var feature = document.getElementById("feature");
 	var artifacts = document.getElementById("artifacts");
+	var squtab = document.getElementById("squaretab");
+	var featab = document.getElementById("featuretab");
+	squtab.style.pointerEvents = "auto";
+	featab.style.backgroundColor = "RGB(181,139,114)";
 	artifacts.style.display = "inline";
 	map.style.display = "none";
-	feature.style.display = "inline";
 
 	var svgStyle = document.getElementById("svgMap");
 	svgStyle.style.display = "none";

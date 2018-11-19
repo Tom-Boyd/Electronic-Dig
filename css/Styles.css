@@ -75,15 +75,6 @@ body{
   top: 10%;
   background-color:white;
 }
-
-#mapbackground{
-  position: absolute;
-  width:33.15%;
-  height:82%;
-  background-color: RGB(181,139,114);
-  left: 33.4%;
-  top: 17.75%;
-}
 .notransition {
   -webkit-transition: none !important;
   -moz-transition: none !important;
@@ -91,23 +82,16 @@ body{
   transition: none !important;
 }
 #infoBox {
-  margin-left: 3%;
-  margin-right: 3%;
-  position: absolute;
   text-align: center;
   color: black;
-  left:18.4%;
-  top:60%;
-  width: 12%;
-  height: 30%;
   background-color:RGB(181,139,114);
   border-radius: 5px 0px 0px 5px;
 }
 #infoText {
   overflow-y:scroll;
   position: relative;
-  top:10%;
-  height: 85%;
+  margin: auto;
+  height: 204px;
   width: 90%;
 }
 .budgetAnim {
@@ -122,34 +106,17 @@ body{
 }
 
 .tabs{
-  position:absolute;
-  width: 10.9%;
+  width: 99%;
   height: 25px;
+  line-height: 25px;
   color: white;
   text-align:center;
-  padding-top: 2px;
   background-color:RGB(181,139,114);
+  border-radius: 5px 5px 0px 0px;
 }
 
 .tabs:hover{
   background-color: gray;
-}
-
-#maptab{
-top: 14.25%;
-left: 33.4%;
-border-radius: 5px 5px 0px 0px;
-}
-#squaretab{
-  top: 14.25%;
-  left: 44.525%;
-  border-radius: 5px 5px 0px 0px;
-}
-
-#featuretab{
-  top: 14.25%;
-  left: 55.65%;
-  border-radius: 5px 5px 0px 0px;
 }
 
 #start {
@@ -176,43 +143,38 @@ border-radius: 100px;
 
 #contextTable {
 display:inline-block;
-margin-left:3%;
-margin-right:3%;
 position: relative;
-left: .5%;
-top:30%;
 overflow-y: auto;
-height: 35%;
-width: 300;
+width: 90%;
+margin: auto;
+margin-top: 16px;
+max-height: 150px;
 }
 
 #contextTableTable{
-  height: auto;
-  width: 300;
-  text-align: center;
-  background-color: white;
-  border-radius: 5px;
+height: auto;
+width: 100%;
+text-align: center;
+background-color: white;
+border-radius: 5px;
 }
 
 #artifactTable {
 position: relative;
-margin-left:3%;
-margin-right:3%;
-width:300;
-height: 35%;
+margin: auto;
+margin-top: 16px;
+width: 90%;
 overflow-y: auto;
 display:inline-block;
-left:.5%;
-top: 65%;
-padding-top: 2%;
+max-height: 349px;
 }
 
 #artifactTableTable{
-  height: auto;
-  width: 300;
-  text-align: center;
-  background-color: white;
-  border-radius: 5px;
+height: auto;
+width: 100%;
+text-align: center;
+background-color: white;
+border-radius: 5px;
 }
 
 
@@ -292,23 +254,22 @@ border-color:#000
 background-color:#98a7b7
 }
 
-#tools{
+.sideTitle {
 color:Black;
-align-content: center;
+line-height:35px;
+margin-top:16px;
 }
 
 .buttons {
 background-color: RGB(102,46,45);
-height:10%;
-width:100%;
-padding:2%;
-position: relative;
-left: -4%;
+height:35px;
+width:90%;
+margin: auto;
 text-align:center;
 margin-top:16px;
-line-height:20px;
-  border-radius: 35px;
-  color:white;
+line-height:35px;
+border-radius: 35px;
+color:white;
 }
 
 .buttons:hover {
@@ -316,17 +277,10 @@ background-color:#aab4c4
 }
 
 #sidebar {
-position:absolute;
-left:21.4%;
-top:20%;
-width: 12%;
-height: 30%;
+width: 100%;
 background-color: RGB(181,139,114);
-padding-left: 1.2%;
 border-radius: 5px 0px 0px 5px;
 text-align: center;
-
-
 }
 
 #desc {
@@ -338,7 +292,7 @@ top:250px
 table,th,td {
 border:1px solid #000;
 border-collapse:collapse;
-font-size:15px
+font-size:10px
 }
 
 p {
@@ -359,23 +313,11 @@ margin-bottom:32px;
 }
 
 #artifacts {
-width:21.5%;
-height:70%;
 background-color: RGB(181,139,114);
-position: absolute;
-left:66.5%;
-top:20%;
-display:none;
 border-radius: 0px 5px 5px 0px;
+text-align: center;
+display: none;
 }
-
-#info{
-  position: absolute;
-  top: 20%;
-  left: 10%;
-
-}
-
 
 h1 {
 text-align:center
@@ -454,57 +396,74 @@ body {font-family: Arial, Helvetica, sans-serif;}
     cursor: pointer;
 }
 
-@media only screen and (max-width: 750px) {
-nav ul {
-padding-top:64px
+#info {
+  display: none;
 }
 
-nav h1 {
-width:100%;
-font-size:20px;
-top:0px
+/* GRID */
+#main-container {
+  display: grid;
+  grid-template-columns: 240px 173.3px 173.3px 173.3px 240px;
+  grid-template-rows: 25px 271px 50px 271px;
+  width: 1000px;
+  margin: auto;
+  height: 750px;
+  margin-top: 32px;
 }
-
+#maptab {
+  grid-column: 2;
+  grid-row: 1;
+  margin-right: 1%;
+  pointer-events: none;
+}
+#squaretab {
+  grid-column: 3;
+  grid-row: 1;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+  background-color:rgb(98, 98, 99);
+  pointer-events: none;
+}
+#featuretab {
+  grid-column: 4;
+  grid-row: 1;
+  margin-left: 1%;
+  background-color:rgb(98, 98, 99);
+}
+#svgMap {
+  grid-column: 2 / 5;
+  grid-row: 2 / 5;
+}
 #sidebar {
-position:absolute;
-top:10%;
-left:10%;
-width:100%;
-display: block;
-margin-right: auto;
-margin-left: auto;
-padding: 1%;
+  grid-column: 1;
+  grid-row: 2;
+}
+#infoBox {
+  grid-column: 1;
+  grid-row: 4;
+}
+#mapbackground {
+  grid-column: 2 / 5;
+  grid-row: 2 / 5;
+  background-color: RGB(181,139,114);
+}
+#artifacts {
+  grid-column: 5;
+  grid-row: 2 / 5;
 }
 
+@media only screen and (max-width: 750px) {
 
-
-
-
-#contextTable,#artifactTable {
-width:90%;
-margin: 16px 3% 0px 3%
-}
-
-#desc {
-position:relative;
-top:0px;
-right:0px
-}
-
-nav li a {
-padding: 0 8px;
-margin-right: 8px
-}
 }
 /* SVG style */
 #svgMap {
   background-color: white;
-  width:32.5%;
-
+  width:calc(100% - 10px);
+  margin: 5px;
+  /*border-style: solid;
+  border-width: 5px;
+  border-color: RGB(181,139,114);*/
   overflow:hidden;
-  position:absolute;
-  top:18.5%;
-  left: 33.75%;
   z-index:1;
   display:none;
 }
