@@ -206,12 +206,12 @@ function generateATable(contextID, artifactTable, pictures) {
 		table += "<td>"+artifactTable[contextID][i][3]+"</td>";
 		var more = parseInt(artifactTable[contextID][i][9]);
 		if (more > 0){
-			if (pictures[more]){
+			if (pictures[(more-1)]){
 				table += "<td>Y</td>";
 			} else {
 				table += "<td>X</td>";
 			}
-			table += "<td><button onclick='more("+more+")'>More</button></td>";
+			table += "<td><button onclick='more("+(more-1)+")'>More</button></td>";
 		} else {
 			table += "<td>X</td>";
 			table += "<td>X</td>";
@@ -425,6 +425,8 @@ function viewSquare(info){
 		var squtab = document.getElementById("squaretab");
 		var maptab = document.getElementById("maptab");
 		var featab = document.getElementById("featuretab");
+		var desc = document.getElementById("description");
+		desc.style.display = "none";
 		featab.style.backgroundColor = "rgb(98, 98, 99)";
 		maptab.style.pointerEvents = "auto";
 		squtab.style.backgroundColor = "RGB(181,139,114)";
@@ -473,6 +475,8 @@ function viewMap() {
 		var squtab = document.getElementById("squaretab");
 		var featab = document.getElementById("featuretab");
 		var maptab = document.getElementById("maptab");
+		var desc = document.getElementById("description");
+		desc.style.display = "none";
 		maptab.style.pointerEvents = "none";
 		squtab.style.pointerEvents = "none";
 		featab.style.backgroundColor = "rgb(98, 98, 99)";
@@ -501,6 +505,8 @@ function viewFeature() {
 	var artifacts = document.getElementById("artifacts");
 	var squtab = document.getElementById("squaretab");
 	var featab = document.getElementById("featuretab");
+	var desc = document.getElementById("description");
+	desc.style.display = "block";
 	squtab.style.pointerEvents = "auto";
 	featab.style.backgroundColor = "RGB(181,139,114)";
 	artifacts.style.display = "inline";
@@ -508,6 +514,28 @@ function viewFeature() {
 
 	var svgStyle = document.getElementById("svgMap");
 	svgStyle.style.display = "none";
+}
+
+function showDescription() {
+	$.ajax({ url: '../db/descriptions/'+featureCode+".html", success: function(data) {
+		var modal = document.getElementById('myModal');
+		var modalEdit = document.getElementById('modalEdit');
+		//remove <a> tags
+		var content = data;
+		while (content.includes("<a ")) {
+			before = content.split("<a ")[0];
+			split2 = content.split('">')[1];
+			middle = split2.split("</a>")[0]
+			split3 = content.split("</a>")
+			after = "";
+			for (i = 1; i < split3.length; ++i) {
+				after += split3[i];
+			}
+			content = before + middle + after;
+		}
+		modalEdit.innerHTML = content;
+		modal.style.display = "block";
+	}});
 }
 
 //When the user clicks on a square:
@@ -539,7 +567,9 @@ function square(object,info) {
 }
 
 var featuredExcavated = []
+var featureCode = "";
 function feature(info) {
+	featureCode = info;
 	//budget
 	if (budget != -1) {
 		if (featuredExcavated.includes(info)) {

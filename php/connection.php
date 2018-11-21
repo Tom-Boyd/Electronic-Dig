@@ -148,12 +148,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         //Check if there is a photo
         if (!empty($artifactTables[$x][$z][1])) {
           array_push($morePictures,$artifactTables[$x][$z][1]);
+          $isPhoto = true;
         }
 
         //Keep moreTables and morePictures at same length
         if ($isPhoto || $isMore) {
-          if ($isPhoto) array_push($moreTables,"");
-          if ($isMore) array_push($morePictures,"");
+          if (!$isPhoto || !$isMore) {
+            if ($isPhoto) array_push($moreTables,"");
+            if ($isMore) array_push($morePictures,"");
+          }
 
           //Set to more count so JS knows
           $artifactTables[$x][$z][9] = $moreCount;

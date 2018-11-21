@@ -129,6 +129,18 @@ body{
   background-color: gray;
 }
 
+#modalEdit p {
+  font-size: 14px;
+  margin: 8px;
+}
+#modalEdit u {
+  text-decoration:none;
+}
+
+#description {
+  display: none;
+}
+
 #start {
 font-size:40px;
 width:90%;
