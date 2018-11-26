@@ -62,7 +62,7 @@ window.addEventListener('wheel',function(){
 
 //Budget
 var budget = -1;
-var rate = 10; //in dollars per hour
+var rate = 15; //in dollars per hour
 function formatBudget(val) {
 	var budgetString = "$"+val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return budgetString;
@@ -345,26 +345,38 @@ document.body.onmouseup = function() {
 //Lets user select a random number of squares
 var unselectedSquares;
 function random() {
-	var number = prompt("Enter number of squares to select", 0);
-	if (number > 0){
-		var squares = document.querySelectorAll("#GRID_UNITS a");
-		unselectedSquares = [];
-		for (i = 0; i < squares.length; ++i) {
-			if (!(selectedSquaresObj.includes(squares[i]) || excavatedSquaresObj.includes(squares[i]))){
+    unselectedSquares = [];
+    for (var i = 0; i < squares.length; ++i) {
+		if (!(selectedSquaresObj.includes(squares[i]) || excavatedSquaresObj.includes(squares[i]))){
 				unselectedSquares.push(squares[i]);
 			}
-		}
-		if (number > unselectedSquares.length) number = unselectedSquares.length;
-		running = true;
-		for (i=0;i<number;i++){
-			var x = Math.floor(Math.random() * unselectedSquares.length);
-			unselectedSquares[x].onclick();
-			remove(unselectedSquares,unselectedSquares[x]);
-		}
-		if (number == 1) updateInfo("Randomly selected 1 square");
-		else updateInfo("Randomly selected "+number+" squares");
-		running = false;
-	}
+    }
+    var number = prompt("Enter a number of squares between 1 and " + unselectedSquares.length + " to select", 0);
+    if (number < 0) {
+        updateInfo("Please enter a positive number");
+        return;
+    }
+	else if (number > unselectedSquares.length){
+		if (!confirm("There are only " + unselectedSquares.length + " squares left. Select all remaining squares?")){
+            return;
+        }
+        number = unselectedSquares.length;
+    }
+    var squares = document.querySelectorAll("#GRID_UNITS a");
+    running = true;
+    for (i=0;i<number;i++){
+        var x = Math.floor(Math.random() * unselectedSquares.length);unselectedSquares = [];
+        for (i = 0; i < squares.length; ++i) {
+            if (!(selectedSquaresObj.includes(squares[i]) || excavatedSquaresObj.includes(squares[i]))){
+				unselectedSquares.push(squares[i]);
+			}
+        }
+        unselectedSquares[x].onclick();
+        remove(unselectedSquares,unselectedSquares[x]);
+    }
+    if (number == 1) updateInfo("Randomly selected 1 square");
+    else updateInfo("Randomly selected "+number+" squares");
+    running = false;
 }
 
 //Global vars to do with map zooming
@@ -641,37 +653,42 @@ function excavateSquare() {
 	var num = selectedSquares.length;
 	if (num == 0) {
 		updateInfo("No squares selected to excavate");
-	} else {
+	} 
+    else {
 		var newBudget = budget;
-		for (i = 0; i< num; i++){
-			//budget
-			if (budget != -1){
-				cost = 40 * rate;
-				if (cost <= newBudget) {
-					newBudget -= cost;
-				} else {
-					updateInfo("Not enough money to excavate further!");
-					break;
-				}
-			}
-			selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
-			excavatedSquares.push(selectedSquares[i]);
-			excavatedSquaresObj.push(selectedSquaresObj[i]);
-		}
-		if (i != 0) {
-			if (budget != -1) {
-				if (i == 1) updateInfo("You have excavated "+i+" square for "+formatBudget(budget-newBudget));
-				else updateInfo("You have excavated "+i+" squares for "+formatBudget(budget-newBudget));
-				updateBudget(newBudget);
-			} else {
-				if (i == 1) updateInfo("You have excavated "+i+" square");
-				else updateInfo("You have excavated "+i+" squares");
-			}
-			selectedSquares = selectedSquares.diff(excavatedSquares);
-			selectedSquaresObj = selectedSquaresObj.diff(excavatedSquaresObj);
-		}
-	}
+        //budget
+        if (budget != -1){
+            var cost = 40 * rate;
+            var total = cost * num;
+            if (total <= newBudget) {
+                newBudget -= total;
+            } 
+            else {
+					updateInfo("Not enough money to excavate the selected squares! You may excavate "  + (budget/cost) + " more with your remaining budget.");
+					return;
+            }
+        }
+    }
+    for (var i = 0; i < num; i++){
+        selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
+        excavatedSquares.push(selectedSquares[i]);
+        excavatedSquaresObj.push(selectedSquaresObj[i]);
+        if (i != 0) {
+            if (budget != -1) {
+                if (i == 1) updateInfo("You have excavated "+i+" square for "+formatBudget(budget-newBudget));
+                else updateInfo("You have excavated "+i+" squares for "+formatBudget(budget-newBudget));
+                updateBudget(newBudget);
+            } 
+            else {
+                if (i == 1) updateInfo("You have excavated "+i+" square");
+                else updateInfo("You have excavated "+i+" squares");
+            }
+            selectedSquares = selectedSquares.diff(excavatedSquares);
+            selectedSquaresObj = selectedSquaresObj.diff(excavatedSquaresObj);
+        }
+    }
 }
+
 
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
