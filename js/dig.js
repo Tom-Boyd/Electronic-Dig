@@ -9,7 +9,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	lines = document.querySelectorAll("svg *");
 
 	//set Budget
-	setBudget(localStorage.getItem("budget"));
+	var budget = localStorage.getItem("budget");
+	budget = (!budget) ? "-1" : budget;
+	setBudget(budget);
 
 	//Show map
 	var svgMap = document.getElementById("svgMap");
@@ -19,12 +21,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var modal = document.getElementById('myModal');
   var span = document.getElementsByClassName("close")[0];
   //When the user clicks on <span> (x), close the modal
-  span.onclick = function() {	modal.style.display = "none";}
+  span.onclick = function() {	modal.style.display = "none";};
 });
 window.addEventListener('mouseover',function(){
   //Drag selecting
 	if (mouseDown == 1) {
-		element = event.target.parentElement;
+		var element = event.target.parentElement;
 		parent = element.parentElement;
 		if (parent) {
 			if (!excavatedSquaresObj.includes(element) && !selectedSquaresObj.includes(element)) {
@@ -69,17 +71,17 @@ function formatBudget(val) {
 }
 function setBudget(val) {
 	budget = val;
-	element = document.getElementById("budget");
+	var element = document.getElementById("budget");
 	if (val == "-1") element.innerHTML = "Unlimited";
 	else element.innerHTML = formatBudget(val);
 }
 function updateBudget(newBudget) {
 	if (budget != newBudget) {
-		difference = budget - newBudget;
+		var difference = budget - newBudget;
 		setBudget(newBudget);
 		//do minus animation
-		element = document.getElementsByClassName("budgetAnim")[0];
-		animate = element.cloneNode(false);
+		var element = document.getElementsByClassName("budgetAnim")[0];
+		var animate = element.cloneNode(false);
 		element.parentElement.appendChild(animate);
 		element.innerHTML = "-"+formatBudget(difference);
 		element.style.top = "50px";
@@ -94,9 +96,9 @@ function updateBudget(newBudget) {
 //Info box
 var log = [];
 function updateInfo(info) {
-	element = document.getElementById("infoText");
+	var element = document.getElementById("infoText");
 	element.innerHTML = info+"<br>"+element.innerHTML;
-	log.push(info)
+	log.push(info);
 }
 
 //Ajax calls
@@ -200,7 +202,7 @@ function generateATable(contextID, artifactTable, pictures) {
 	table += "<th>Picture</th>";
   table += "<th>More</th>";
   table += "</tr>";
-  for (i = 0; i < artifactTable[contextID].length-1; ++i) {
+  for (var i = 0; i < artifactTable[contextID].length-1; ++i) {
     table += "<tr class='contextrow'>";
     table += "<td>"+artifactTable[contextID][i][8]+"</td>";
 		table += "<td>"+artifactTable[contextID][i][3]+"</td>";
@@ -228,9 +230,9 @@ function generateCTable(contextTable) {
   table += "<th>Entries</th>";
   table += "<th>Photo</th>";
   table += "</tr>";
-  for (i = 0; i < contextTable.length; ++i) {
+  for (var i = 0; i < contextTable.length; ++i) {
     table += "<tr class='artifactrow' onclick='generateATable("+i+")'>";
-    for (z = 0; z < contextTable[i].length; ++z) {
+    for (var z = 0; z < contextTable[i].length; ++z) {
       table += "<td>"+contextTable[i][z]+"</td>";
     }
     table += "</tr>";
@@ -239,22 +241,22 @@ function generateCTable(contextTable) {
 }
 
 //When the user clicks anywhere outside of the modal, close it
-var modal, btn, span;
+var modal;
 window.onclick = function(event) {
 		if (event.target == modal) {
 				modal.style.display = "none";
 		}
-}
+};
 
 //When the more button is clicked
 function more(index) {
 	if (view == "feature") {
-		pictures = feapictures;
-		moreTables = feamoreTables;
+		var pictures = feapictures;
+		var moreTables = feamoreTables;
 	}
 	else {
-		pictures = sqpictures;
-		moreTables = sqmoreTables;
+		var pictures = sqpictures;
+		var moreTables = sqmoreTables;
 	}
 
 	//Filter Columns
@@ -303,16 +305,16 @@ function more(index) {
 	var modalEdit = document.getElementById('modalEdit');
 	modal.style.display = "block";
 
-	title = "<h1>"+title+"</h1>"
+	title = "<h1>"+title+"</h1>";
 	//Column names
 	var table = title+"<table><tr>";
-	for (i = 0; i < columnNames.length; ++i) {
+	for (var i = 0; i < columnNames.length; ++i) {
 			table += "<th>"+columnNames[i]+"</th>";
 	}
 	table += "</tr>";
-	for (i = 2; i < moreTables[index].length; ++i) {
+	for (var i = 2; i < moreTables[index].length; ++i) {
 		table += "<tr>";
-		for (z = 0; z < indexes.length; ++z) {
+		for (var z = 0; z < indexes.length; ++z) {
 			table += "<td>"+moreTables[index][i][indexes[z]]+"</td>";
 		}
 		table += "</tr>";
@@ -349,14 +351,14 @@ function random() {
 	if (number > 0){
 		var squares = document.querySelectorAll("#GRID_UNITS a");
 		unselectedSquares = [];
-		for (i = 0; i < squares.length; ++i) {
+		for (var i = 0; i < squares.length; ++i) {
 			if (!(selectedSquaresObj.includes(squares[i]) || excavatedSquaresObj.includes(squares[i]))){
 				unselectedSquares.push(squares[i]);
 			}
 		}
 		if (number > unselectedSquares.length) number = unselectedSquares.length;
 		running = true;
-		for (i=0;i<number;i++){
+		for (var i = 0; i < number; i++){
 			var x = Math.floor(Math.random() * unselectedSquares.length);
 			unselectedSquares[x].onclick();
 			remove(unselectedSquares,unselectedSquares[x]);
@@ -380,7 +382,7 @@ function mapZoom() {
 	var val = [0,0,0,0];
 	for (var i = 0; i < 4; i++) val[i] = from[i] + ((to[i]-from[i]) * per);
 	var stroke = sfrom + ((sto-sfrom) * per);
-	for (i = 0; i < lines.length; ++i) lines[i].style.strokeWidth = stroke;
+	for (var i = 0; i < lines.length; ++i) lines[i].style.strokeWidth = stroke;
 	var height = hfrom + ((hto-hfrom) * per);
 	svgStyle.style.height = height+"px";
 	if (val[2] < 0) val[2] = 0;
@@ -523,12 +525,12 @@ function showDescription() {
 		//remove <a> tags
 		var content = data;
 		while (content.includes("<a ")) {
-			before = content.split("<a ")[0];
-			split2 = content.split('">')[1];
-			middle = split2.split("</a>")[0]
-			split3 = content.split("</a>")
-			after = "";
-			for (i = 1; i < split3.length; ++i) {
+			var before = content.split("<a ")[0];
+			var split2 = content.split('">')[1];
+			var middle = split2.split("</a>")[0];
+			var split3 = content.split("</a>");
+			var after = "";
+			for (var i = 1; i < split3.length; ++i) {
 				after += split3[i];
 			}
 			content = before + middle + after;
@@ -566,7 +568,7 @@ function square(object,info) {
 	}
 }
 
-var featuredExcavated = []
+var featuredExcavated = [];
 var featureCode = "";
 function feature(info) {
 	featureCode = info;
@@ -579,7 +581,7 @@ function feature(info) {
 			//check if uncovered
 			getSquares(info);
 			var uncovered = true;
-			for (i = 0; i < squares.length; ++i) {
+			for (var i = 0; i < squares.length; ++i) {
 				if(!excavatedSquares.includes(squares[i])){
 					uncovered = false;
 					break;
@@ -588,14 +590,14 @@ function feature(info) {
 			if (!uncovered) {
 				updateInfo("This feature is not fully uncovered");
 			} else {
-				getCost(info)
+				getCost(info);
 				var newBudget = budget;
 				if (cost <= newBudget) {
 					newBudget -= cost;
 					getData(info);
 					viewFeature();
 					updateBudget(newBudget);
-					featuredExcavated.push(info)
+					featuredExcavated.push(info);
 					updateInfo("You have excavated a feature for "+formatBudget(cost));
 				} else {
 					updateInfo("Not enough money to excavate!");
@@ -643,7 +645,7 @@ function excavateSquare() {
 		updateInfo("No squares selected to excavate");
 	} else {
 		var newBudget = budget;
-		for (i = 0; i< num; i++){
+		for (var i = 0; i< num; i++){
 			//budget
 			if (budget != -1){
 				cost = 40 * rate;
