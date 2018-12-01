@@ -4,10 +4,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Electronic Dig</title>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="css/Styles.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 </head>
 
 <body>
@@ -16,11 +15,10 @@
 	<nav>
 		<ul>
 			<li><a href="https://rla.unc.edu/dig/" style="color:white;">Main Menu</a></li>
-			<li><h1 id="title">OCCANEECHI TOWN</h1></li>
-			<li><h1 id="subtitle">ELECTRONIC DIG</h1></li>
-			<li style="float:right;margin-right:16px;">Budget: <span id="budget"></span><span class="budgetAnim"></span></li>
+      <li><a href="index.html" style="color:white;">Reset</a></li>
+			<li style="float:right;margin-right:16px;">Balance: <span id="budget"></span><span class="budgetAnim"></span></li>
 			<li class="dropdown">
-		    <a class="dropbtn">&#9776; Help</i>
+		    <a class="dropbtn">&#9776;&nbsp;Help</i>
 		    </a>
 		    <div class="dropdown-content">
 				<a>Tutorial</a>
@@ -29,6 +27,10 @@
 				<a>Export</a>
 		    </div>
 		  </li>
+      <div>
+        <h1 id="title">OCCANEECHI TOWN</h1>
+        <h1 id="subtitle">ELECTRONIC DIG</h1>
+      </div>
 		</ul>
 	</nav>
 
@@ -4448,7 +4450,6 @@
         <div class="buttons" onclick="excavateSquare()">EXCAVATE</div>
         <div class="buttons" onclick="deselect()">DESELECT</div>
         <div class="buttons" onclick="random()">RANDOM</div>
-        <a href="index.html"><div class="buttons">RESET</div></a>
       </div>
       <div id="info">
         <h2 class="sideTitle" id="ajTitle"></h3>
@@ -4524,10 +4525,9 @@
 		<div id="myModal" class="modal">
 
 		  <!-- Modal content -->
-		  <!-- <div class="modal-content"> -->
-		  <div class="w3-container">
-		    <span class="w3-table w3-striped">&times;</span>
-		    </div>
+      <div class="modal-content">
+		    <span class="close">&times;</span>
+		    <div id="modalEdit">Some text in the Modal..</div>
 		    <!-- slide show -->
 		  <div class="slideshow-container">
 				<div class="mySlides fade">
