@@ -564,7 +564,7 @@ function showPictures() {
 		else content += "<div class='mySlides fade' style='display:none'>";
 		content += "<div class='numbertext'>";
 		content += (i+1)+" / "+squarePics.length+"</div>";
-		content += "<img src=db/images/"+squarePics[i]+".gif style='display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
+		content += "<img src=db/images/"+squarePics[i].toLowerCase()+".gif style='display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
 		content += "</div>";
 	}
 	content += "<a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
