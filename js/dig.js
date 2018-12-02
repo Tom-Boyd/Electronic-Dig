@@ -124,6 +124,18 @@ function getCost(code) {
   xmlhttp.open("GET", "php/connection.php?codeCost=" + code, false);
   xmlhttp.send();
 }
+var squarePics = [];
+function getSquPics(code) {
+	var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+			squarePics = (this.response).split(",");
+			console.log(squarePics);
+    }
+  };
+  xmlhttp.open("GET", "php/connection.php?codeSquPics=" + code, false);
+  xmlhttp.send();
+}
 var sqcontextTable, sqartifactTable, sqproperties, sqmoreTables, sqpictures;
 var feacontextTable, feaartifactTable, feaproperties, feamoreTables, feapictures;
 function getData(code) {
@@ -459,6 +471,7 @@ function viewSquare(info){
 			hto = 520; //height
 			hfrom = 582; //height
 			mapZoom();
+			getSquPics(info);
 		}
 	}
 }
@@ -538,6 +551,49 @@ function showDescription() {
 		modalEdit.innerHTML = content;
 		modal.style.display = "block";
 	}});
+}
+
+function showPictures() {
+	var modal = document.getElementById('myModal');
+	var modalEdit = document.getElementById('modalEdit');
+	var modalPicts = document.getElementById('modalPics');
+	var content = "<div class='slideshow-container'>"
+	content += "<h1 style='margin-top:20px'>"+sqproperties[0]+" Images</h1>";
+	for (var i = 0; i < squarePics.length; ++i) {
+		if (i == 0) content += "<div class='mySlides fade' style='display:block'>";
+		else content += "<div class='mySlides fade' style='display:none'>";
+		content += "<div class='numbertext'>";
+		content += (i+1)+" / "+squarePics.length+"</div>";
+		content += "<img src=db/images/"+squarePics[i]+".gif style='display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
+		content += "</div>";
+	}
+	content += "<a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
+	content += "<a class='next' onclick='plusSlides(1)'>&#10095;</a>";
+	content += "<div style='text-align:center'>"
+	for (var i = 0; i < squarePics.length; ++i) {
+		content += "<span class='dot' onclick='currentSlide("+(i+1)+")'></span>";
+	}
+	content += "</div>";
+	modalPicts.innerHTML = content;
+	modalEdit.innerHTML = "";
+	modal.style.display = "block";
+}
+var slideIndex = 1;
+function currentSlide(n) {
+	showPic(slideIndex = n);
+}
+function plusSlides(n) {
+	showPic(slideIndex += n);
+}
+function showPic(n) {
+	var i;
+	var x = document.getElementsByClassName("mySlides");
+	if (n > x.length) {slideIndex = 1}
+	if (n < 1) {slideIndex = x.length}
+	for (i = 0; i < x.length; i++) {
+		 x[i].style.display = "none";
+	}
+	x[slideIndex-1].style.display = "block";
 }
 
 //When the user clicks on a square:

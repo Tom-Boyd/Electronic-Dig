@@ -289,7 +289,8 @@ width:90%
 color:#aaa;
 float:right;
 font-size:28px;
-font-weight:700
+font-weight:700;
+margin-top:-17px;
 }
 
 .close:hover,.close:focus {
@@ -373,10 +374,16 @@ border:1px solid #888;
 display:block;
 margin:auto;
 padding:20px;
-width:80%
+width:80%;
+height:546.5px
 }
 
-.mySlides,#second,#other,#description,#square,#feature,#info {
+.mySlides {
+height:405px;
+margin-top:20px
+}
+
+#second,#other,#description,#square,#feature,#info {
 display:none
 }
 
@@ -430,7 +437,8 @@ padding:16px;
 position:absolute;
 top:50%;
 transition:.6s ease;
-width:auto
+width:auto;
+background-color:#bbb
 }
 
 .prev:hover,.next:hover {

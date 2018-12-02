@@ -4460,6 +4460,7 @@
         <h5>  Depth: <span id="ajDepth"></span> ft</h5>
         <h5>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h5>
         <h5>Area: <span id="ajArea"></span> ft<sup>2</sup></h5>
+        <div class="buttons" onclick="showPictures()">IMAGES</div>
         <div id="description" class="buttons" onclick="showDescription()">DESCRIPTION</div>
       </div>
     </div>
@@ -4529,58 +4530,8 @@
 		    <span class="close">&times;</span>
 		    <div id="modalEdit">Some text in the Modal..</div>
 		    <!-- slide show -->
-		  <div class="slideshow-container">
-				<div class="mySlides fade">
-				  <div class="numbertext">1 / 3</div>
-				  <!--<img src="img_nature_wide.jpg" style="width:100%">-->
-				  <div class="text">Caption Text</div>
-				</div>
-
-				<div class="mySlides fade">
-				  <div class="numbertext">2 / 3</div>
-				  <!--<img src="img_snow_wide.jpg" style="width:100%">-->
-				  <div class="text">Caption Two</div>
-				</div>
-
-				<div class="mySlides fade">
-				  <div class="numbertext">3 / 3</div>
-				  <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
-				  <div class="text">Caption Three</div>
-				</div>
-
-				<!--<a class="prev" onclick="plusSlides(-1)">&#10094;</a>-->
-				<!--<a class="next" onclick="plusSlides(1)">&#10095;</a>-->
-
-				</div>
-				<br>
-
-				<div style="text-align:center">
-				  <!--<span class="dot" onclick="currentSlide(1)"></span>-->
-				  <!--<span class="dot" onclick="currentSlide(2)"></span>-->
-				  <!--<span class="dot" onclick="currentSlide(3)"></span>-->
-				</div>
-	 	 </div>
+		   <div id="modalPics">
+  	 	 </div>
+     </div>
 <div class="tooltip" id="excavateFeatureTooltip">Click to excavate this feature!</div>
-
-		<!-- slideshow script -->
-		<script>
-		var slideIndex = 1;
-		showDivs(slideIndex);
-
-		function plusDivs(n) {
-		  showDivs(slideIndex += n);
-		}
-
-		function showDivs(n) {
-		  var i;
-		  var x = document.getElementsByClassName("mySlides");
-		  if (n > x.length) {slideIndex = 1}
-		  if (n < 1) {slideIndex = x.length}
-		  for (i = 0; i < x.length; i++) {
-		     x[i].style.display = "none";
-		  }
-		  x[slideIndex-1].style.display = "block";
-		}
-		</script>
-
 </body>
