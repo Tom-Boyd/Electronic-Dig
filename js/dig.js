@@ -95,10 +95,19 @@ function updateBudget(newBudget) {
 
 //Info box
 var log = [];
-function updateInfo(info) {
-	var element = document.getElementById("infoText");
-	element.innerHTML = info+"<br>"+element.innerHTML;
-	log.push(info);
+function updateInfo(info,colour) {
+	if (info == 1) {
+		var element = document.getElementById("infoSelected");
+		element.innerHTML = selectedSquares.length;
+	} else if (info == 2) {
+		var element = document.getElementById("infoExcavated");
+		element.innerHTML = excavatedSquares.length;
+		updateInfo(1);
+	} else {
+		var element = document.getElementById("infoText");
+		element.innerHTML = "<span style='color:"+colour+"'>"+info+"</span><br>"+element.innerHTML;
+		log.push(info);
+	}
 }
 
 //Ajax calls
@@ -375,8 +384,9 @@ function random() {
 			unselectedSquares[x].onclick();
 			remove(unselectedSquares,unselectedSquares[x]);
 		}
-		if (number == 1) updateInfo("Randomly selected 1 square");
-		else updateInfo("Randomly selected "+number+" squares");
+		if (number == 1) updateInfo("Randomly selected 1 square","black");
+		else updateInfo("Randomly selected "+number+" squares","black");
+		updateInfo(1,"");
 		running = false;
 	}
 }
@@ -535,6 +545,8 @@ function showDescription() {
 	$.ajax({ url: '../db/descriptions/'+featureCode+".html", success: function(data) {
 		var modal = document.getElementById('myModal');
 		var modalEdit = document.getElementById('modalEdit');
+		var modalPicts = document.getElementById('modalPics');
+		modalPicts.innerHTML = "";
 		//remove <a> tags
 		var content = data;
 		while (content.includes("<a ")) {
@@ -608,7 +620,7 @@ function square(object,info) {
 		object.firstChild.style.fill= "url(#imgGrass)";
 		remove(selectedSquares, info);
 		remove(selectedSquaresObj, object);
-		if (!running) updateInfo("Squares selected: "+selectedSquares.length);
+		if (!running) updateInfo(1,"");
 	} else {
 		if(excavatedSquaresObj.includes(object)) {
 			if (info != 'null') {
@@ -619,7 +631,7 @@ function square(object,info) {
 			object.firstChild.style.fill= "url(#imgGrassSelected)";
 			selectedSquares.push(info);
 			selectedSquaresObj.push(object);
-			if (!running) updateInfo("Squares selected: "+selectedSquares.length);
+			if (!running) updateInfo(1,"");
 		}
 	}
 }
@@ -644,7 +656,7 @@ function feature(info) {
 				}
 			}
 			if (!uncovered) {
-				updateInfo("This feature is not fully uncovered");
+				updateInfo("This feature is not fully uncovered","red");
 			} else {
 				getCost(info);
 				var newBudget = budget;
@@ -654,9 +666,9 @@ function feature(info) {
 					viewFeature();
 					updateBudget(newBudget);
 					featuredExcavated.push(info);
-					updateInfo("You have excavated a feature for "+formatBudget(cost));
+					updateInfo("You have excavated a feature for "+formatBudget(cost),"green");
 				} else {
-					updateInfo("Not enough money to excavate!");
+					updateInfo("Not enough money to excavate!","red");
 				}
 			}
 		}
@@ -669,11 +681,11 @@ function feature(info) {
 //Deselects all squares
 var running = false;
 function deselect() {
-	while (selectedSquares.length != 0) {
-		var num = selectedSquares.length;
-		if (num == 0) {
-			updateInfo("No squares selected to deselect");
-		} else {
+	if (selectedSquares.length == 0) {
+		updateInfo("No squares selected to deselect","red");
+	} else {
+		while (selectedSquares.length != 0) {
+			var num = selectedSquares.length;
 			running = true;
 			var arr = selectedSquaresObj.slice();
 			for (var i = num-1; i>=0; i--){
@@ -681,8 +693,9 @@ function deselect() {
 			}
 			running = false;
 		}
+		updateInfo("All squares were deselected","black");
+		updateInfo(1,"");
 	}
-	updateInfo("All squares were deselected");
 }
 
 //Removes element from array
@@ -698,7 +711,7 @@ function remove(list,value) {
 function excavateSquare() {
 	var num = selectedSquares.length;
 	if (num == 0) {
-		updateInfo("No squares selected to excavate");
+		updateInfo("No squares selected to excavate","red");
 	} else {
 		var newBudget = budget;
 		for (var i = 0; i< num; i++){
@@ -708,7 +721,7 @@ function excavateSquare() {
 				if (cost <= newBudget) {
 					newBudget -= cost;
 				} else {
-					updateInfo("Not enough money to excavate further!");
+					updateInfo("Not enough money to excavate further!","red");
 					break;
 				}
 			}
@@ -718,15 +731,16 @@ function excavateSquare() {
 		}
 		if (i != 0) {
 			if (budget != -1) {
-				if (i == 1) updateInfo("You have excavated "+i+" square for "+formatBudget(budget-newBudget));
-				else updateInfo("You have excavated "+i+" squares for "+formatBudget(budget-newBudget));
+				if (i == 1) updateInfo("You have excavated "+i+" square for "+formatBudget(budget-newBudget),"green");
+				else updateInfo("You have excavated "+i+" squares for "+formatBudget(budget-newBudget),"green");
 				updateBudget(newBudget);
 			} else {
-				if (i == 1) updateInfo("You have excavated "+i+" square");
-				else updateInfo("You have excavated "+i+" squares");
+				if (i == 1) updateInfo("You have excavated "+i+" square","green");
+				else updateInfo("You have excavated "+i+" squares","green");
 			}
 			selectedSquares = selectedSquares.diff(excavatedSquares);
 			selectedSquaresObj = selectedSquaresObj.diff(excavatedSquaresObj);
+			updateInfo(2,"");
 		}
 	}
 }

@@ -109,9 +109,23 @@ grid-row:1;
 margin-left:1%
 }
 
+#squareInfo {
+background-color:#b58b72;
+grid-column:1;
+grid-row:3;
+text-align:center;
+width:100%
+}
+
+#squareInfo h5{
+display: inline-block;
+line-height: 20px;
+margin-bottom: 8px;
+}
+
 #infoBox {
 background-color:#b58b72;
-border-radius:5px 0 0 5px;
+border-radius:0 0 0 5px;
 color:#000;
 grid-column:1;
 grid-row:4;
@@ -119,7 +133,7 @@ text-align:center
 }
 
 #infoText {
-height:204px;
+height:147px;
 margin:auto;
 overflow-y:scroll;
 position:relative;
@@ -136,7 +150,7 @@ width:10%
 #main-container {
 display:grid;
 grid-template-columns:240px 173.3px 173.3px 173.3px 240px;
-grid-template-rows:25px 271px 50px 271px;
+grid-template-rows:25px 292px 100px 200px;
 margin:32px auto auto;
 width:1000px
 }
@@ -193,11 +207,22 @@ width:10%
 
 #sidebar {
 background-color:#b58b72;
-border-radius:5px 0 0 5px;
+border-radius:5px 0 0 0;
 grid-column:1;
 grid-row:2;
 text-align:center;
 width:100%
+}
+
+#infoSelected, #infoExcavated {
+  display: inline-block;
+  text-align:center;
+  border-radius:5px;
+  background-color: white;
+  margin-left: 4px;
+  line-height: 20px;
+  height: 20px;
+  min-width: 20px;
 }
 
 #squaretab {
@@ -374,8 +399,7 @@ border:1px solid #888;
 display:block;
 margin:auto;
 padding:20px;
-width:80%;
-height:546.5px
+width:80%
 }
 
 .mySlides {
@@ -485,7 +509,7 @@ cursor: pointer
 .sideTitle {
 color:#000;
 line-height:35px;
-margin-top:16px
+margin-top:2px
 }
 
 .slideshow-container {
@@ -645,8 +669,6 @@ border:1px solid #000;
 border-collapse:collapse;
 text-align: center;
 font-size:10px
-
-
 }
 
 to {
