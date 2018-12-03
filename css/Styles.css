@@ -558,7 +558,7 @@ text-decoration:none
 body {
 background-color:#FFF;
 background-image:url(../images/OccaneechiDrawing.jpg);
-background-position:center top;
+background-position:center 75px;
 background-repeat:no-repeat;
 background-size:1200px;
 font-family:Arial, Helvetica, sans-serif;
@@ -644,7 +644,7 @@ table,th,td {
 border:1px solid #000;
 border-collapse:collapse;
 text-align: center;
-font-size:10px           
+font-size:10px
 
 
 }
@@ -661,8 +661,58 @@ tr:hover {
 background-color:gray
 }
 
-@media only screen and max-width 300px{
-.prev,.next,.text {
-font-size:11px
+@media only screen and (max-width: 500px){
+#title {
+font-size:20pt
+}
+nav h1 {
+width:100%
+}
+nav div {
+left:auto !important;
+width:100%
+}
+#first {
+grid-template-columns: 100%;
+grid-template-rows: 50px 50px 100px 100px;
+width:calc(100% - 32px)
+}
+#tutorial {
+grid-column: 1;
+grid-row: 2
+}
+#setBudget {
+grid-column: 1;
+grid-row: 3
+}
+#start {
+grid-column: 1;
+grid-row: 4
+}
+}
+
+@media only screen and (max-width: 900px){
+nav div {
+margin-top: 75px;
+position: absolute;
+color: black;
+left: calc(50% - 250px);
+}
+#first {
+margin-top:89px;
+grid-row-gap: 16px;
+grid-column-gap: 8px;
+}
+.slider {
+margin:8px 0 8px 0
+}
+}
+
+@media only screen and (max-width: 1200px){
+nav {
+width:100%
+}
+body {
+background-size:100%
 }
 }
