@@ -112,7 +112,7 @@ function updateInfo(info,colour) {
 
 //Ajax calls
 var squares = [];
-function getSquares(code) {
+function getSquares(code) { //Gets squares that are over a feature
 	var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -123,7 +123,7 @@ function getSquares(code) {
   xmlhttp.send();
 }
 var cost = 0;
-function getCost(code) {
+function getCost(code) { //Gets cost of feature or square
 	var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -134,7 +134,7 @@ function getCost(code) {
   xmlhttp.send();
 }
 var squarePics = [];
-function getSquPics(code) {
+function getSquPics(code) { //Gets pictures of square
 	var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -147,7 +147,7 @@ function getSquPics(code) {
 }
 var sqcontextTable, sqartifactTable, sqproperties, sqmoreTables, sqpictures;
 var feacontextTable, feaartifactTable, feaproperties, feamoreTables, feapictures;
-function getData(code) {
+function getData(code) { //Gets all info for square or feature
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -177,6 +177,7 @@ function getData(code) {
   xmlhttp.send();
 }
 
+//Updates page with all info about square or feature
 function update() {
   var title = document.getElementById("ajTitle");
   var type = document.getElementById("ajType");
@@ -208,6 +209,7 @@ function update() {
 	}
 }
 
+//Creates artifact table
 function generateATable(contextID, artifactTable, pictures) {
 	if (view != "square") {
 		artifactTable = feaartifactTable;
@@ -244,6 +246,7 @@ function generateATable(contextID, artifactTable, pictures) {
   aTable.innerHTML = table;
 }
 
+//Creates context table
 function generateCTable(contextTable) {
   var cTable = document.getElementById("contextTable");
   var table = "<table id='contextTableTable'><tr class='artifactrow'>";
@@ -536,7 +539,7 @@ function viewFeature() {
 	featab.style.backgroundColor = "RGB(181,139,114)";
 	artifacts.style.display = "inline";
 	map.style.display = "none";
-    
+
     var picLocation = document.getElementById("mapbackground");
     $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif style='padding:20px;'>");
 
@@ -544,6 +547,7 @@ function viewFeature() {
 	svgStyle.style.display = "none";
 }
 
+//Opens modal with description of feature
 function showDescription() {
 	$.ajax({ url: '../db/descriptions/'+featureCode+".html", success: function(data) {
 		var modal = document.getElementById('myModal');
@@ -568,6 +572,7 @@ function showDescription() {
 	}});
 }
 
+//Opens the modal with slideshow of pictures
 function showPictures() {
 	var modal = document.getElementById('myModal');
 	var modalEdit = document.getElementById('modalEdit');
@@ -748,6 +753,7 @@ function excavateSquare() {
 	}
 }
 
+//Gets the difference between 2 arrays
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
 };
