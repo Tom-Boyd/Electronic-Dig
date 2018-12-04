@@ -1,5 +1,5 @@
 //Prompts user to enter a buget
-var budget = 20000;
+var budget = 50000;
 function start() {
 	localStorage.setItem("budget",budget);
 	window.location.href = "dig.html";
