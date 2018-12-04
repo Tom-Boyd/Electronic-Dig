@@ -536,6 +536,9 @@ function viewFeature() {
 	featab.style.backgroundColor = "RGB(181,139,114)";
 	artifacts.style.display = "inline";
 	map.style.display = "none";
+    
+    var picLocation = document.getElementById("mapbackground");
+    $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif style='padding:20px;'>");
 
 	var svgStyle = document.getElementById("svgMap");
 	svgStyle.style.display = "none";
