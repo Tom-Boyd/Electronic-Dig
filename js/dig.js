@@ -327,6 +327,8 @@ function more(index) {
 
 	var modal = document.getElementById('myModal');
 	var modalEdit = document.getElementById('modalEdit');
+	var modalPicts = document.getElementById('modalPics');
+	modalPicts.innerHTML = "";
 	modal.style.display = "block";
 
 	title = "<h1>"+title+"</h1>";
