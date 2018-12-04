@@ -64,7 +64,7 @@ window.addEventListener('wheel',function(){
 
 //Budget
 var budget = -1;
-var rate = 10; //in dollars per hour
+var rate = 15; //in dollars per hour
 function formatBudget(val) {
 	var budgetString = "$"+val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return budgetString;
