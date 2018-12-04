@@ -47,7 +47,7 @@ fill:#ba7d57F0
 }
 
 #GRID_UNITS a path {
-color:#646464;
+color:black;
 fill:url(#imgGrass);
 stroke-width:0.2!important
 }
@@ -107,6 +107,10 @@ background-color:#626263;
 grid-column:4;
 grid-row:1;
 margin-left:1%
+}
+
+#camera{
+    width=25px;
 }
 
 #squareInfo {

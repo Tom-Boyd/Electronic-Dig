@@ -230,14 +230,14 @@ function generateATable(contextID, artifactTable, pictures) {
 		var more = parseInt(artifactTable[contextID][i][9]);
 		if (more > 0){
 			if (pictures[(more-1)]){
-				table += "<td>Y</td>";
+				table += "<td>Yes</td>";
 			} else {
-				table += "<td>X</td>";
+				table += "<td></td>";
 			}
 			table += "<td><button onclick='more("+(more-1)+")'>More</button></td>";
 		} else {
-			table += "<td>X</td>";
-			table += "<td>X</td>";
+			table += "<td></td>";
+			table += "<td></td>";
 		}
     table += "</tr>";
   }
