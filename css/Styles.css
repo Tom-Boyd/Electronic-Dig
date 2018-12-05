@@ -219,14 +219,14 @@ width:100%
 }
 
 #infoSelected, #infoExcavated {
-  display: inline-block;
-  text-align:center;
-  border-radius:5px;
-  background-color: white;
-  margin-left: 4px;
-  line-height: 20px;
-  height: 20px;
-  min-width: 20px;
+display: inline-block;
+text-align:center;
+border-radius:5px;
+background-color: white;
+margin-left: 4px;
+line-height: 20px;
+height: 20px;
+min-width: 20px;
 }
 
 #squaretab {
@@ -345,14 +345,10 @@ padding:0
 
 #dropIcon .dropbtn {
 font-size: 40px;
-margin: 12px;
+margin: 16px;
+line-height: 65px;
 }
 
-#dropIcon:hover #navDropdown {
-display:block;
-text-align:center;
-text-decoration:none
-}
 #navDropdown {
 z-index: 1000000;
 background-color: #2c2d62;
@@ -888,5 +884,14 @@ display: none;
 }
 #smallNav {
 display: block;
+}
+}
+
+@media only screen and (max-width: 350px){
+#title {
+font-size: 15pt;
+}
+#subtitle {
+font-size: 15pt;
 }
 }

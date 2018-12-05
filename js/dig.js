@@ -102,6 +102,19 @@ $(window).resize(function() {
 	}
 });
 
+//nav
+function navToggle() {
+	var element = document.getElementById("navDropdown");
+	console.log(element.style.display);
+	if (element.style.display == "none" || element.style.display == "") {
+		element.style.display = "block";
+		console.log("here");
+		console.log(element.style.display);
+	} else {
+		element.style.display = "none";
+	}
+}
+
 //Budget
 var budget = -1;
 var rate = 15; //in dollars per hour
