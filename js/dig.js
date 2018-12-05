@@ -22,6 +22,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var span = document.getElementsByClassName("close")[0];
   //When the user clicks on <span> (x), close the modal
   span.onclick = function() {	modal.style.display = "none";};
+
+	if ($(window).width() < 760){
+		smallWindow = true;
+	} else {
+		smallWindow = false;
+		var section1 = document.getElementById("sidebar");
+		var section2 = document.getElementById("squareInfo");
+		var section3 = document.getElementById("infoBox");
+		section1.style.gridColumn = "";
+		section2.style.gridColumn = "";
+		section3.style.gridColumn = "";
+	}
 });
 window.addEventListener('mouseover',function(){
   //Drag selecting
@@ -59,6 +71,34 @@ window.addEventListener('wheel',function(){
 	}
 	if (element.id == "svgMap" && view == "square"  && event.deltaY > 0) {
 		viewMap();
+	}
+});
+var smallWindow = false
+$(window).resize(function() {
+	var svgMap = document.getElementById("svgMap");
+	svgMap.style.height = svgMap.clientWidth * (15/13);
+  if ($(window).width() < 760){
+		smallWindow = true;
+		var section1 = document.getElementById("sidebar");
+		var section2 = document.getElementById("squareInfo");
+		var section3 = document.getElementById("infoBox");
+		if (view == "map") {
+			section1.style.gridColumn = "1/7";
+			section2.style.gridColumn = "1/7";
+			section3.style.gridColumn = "1/7";
+		} else {
+			section1.style.gridColumn = "1/4";
+			section2.style.gridColumn = "1/4";
+			section3.style.gridColumn = "1/4";
+		}
+	} else {
+		smallWindow = false;
+		var section1 = document.getElementById("sidebar");
+		var section2 = document.getElementById("squareInfo");
+		var section3 = document.getElementById("infoBox");
+		section1.style.gridColumn = "";
+		section2.style.gridColumn = "";
+		section3.style.gridColumn = "";
 	}
 });
 
@@ -234,12 +274,12 @@ function generateATable(contextID, artifactTable, pictures) {
 			if (pictures[(more-1)]){
 				table += "<td>Yes</td>";
 			} else {
-				table += "<td></td>";
+				table += "<td>No</td>";
 			}
 			table += "<td><button onclick='more("+(more-1)+")'>More</button></td>";
 		} else {
-			table += "<td></td>";
-			table += "<td></td>";
+			table += "<td>No</td>";
+			table += "<td>No</td>";
 		}
     table += "</tr>";
   }
@@ -455,6 +495,14 @@ function viewSquare(info){
 		var maptab = document.getElementById("maptab");
 		var featab = document.getElementById("featuretab");
 		var desc = document.getElementById("description");
+		if (smallWindow){
+			var section1 = document.getElementById("sidebar");
+			var section2 = document.getElementById("squareInfo");
+			var section3 = document.getElementById("infoBox");
+			section1.style.gridColumn = "1/4";
+			section2.style.gridColumn = "1/4";
+			section3.style.gridColumn = "1/4";
+		}
 		desc.style.display = "none";
 		featab.style.backgroundColor = "rgb(98, 98, 99)";
 		maptab.style.pointerEvents = "auto";
@@ -483,8 +531,9 @@ function viewSquare(info){
 			from = [-20, -330, 130, 150]; //viewbox
 			sto = 0.05; //stroke
 			sfrom = 0.3; //stroke
-			hto = 520; //height
-			hfrom = 582; //height
+			var svgMap = document.getElementById("svgMap");
+			hto = svgMap.clientWidth; //height
+			hfrom = svgMap.clientHeight; //height
 			mapZoom();
 			getSquPics(info);
 		}
@@ -506,6 +555,14 @@ function viewMap() {
 		var featab = document.getElementById("featuretab");
 		var maptab = document.getElementById("maptab");
 		var desc = document.getElementById("description");
+		if (smallWindow){
+			var section1 = document.getElementById("sidebar");
+			var section2 = document.getElementById("squareInfo");
+			var section3 = document.getElementById("infoBox");
+			section1.style.gridColumn = "1/7";
+			section2.style.gridColumn = "1/7";
+			section3.style.gridColumn = "1/7";
+		}
 		desc.style.display = "none";
 		maptab.style.pointerEvents = "none";
 		squtab.style.pointerEvents = "none";
@@ -523,9 +580,9 @@ function viewMap() {
 		temp = sto;
 		sto = sfrom;
 		sfrom = temp;
-		temp = hto;
-		hto = hfrom;
-		hfrom = temp;
+		var svgMap = document.getElementById("svgMap");
+		hto = svgMap.clientWidth * (15/13);
+		hfrom = svgMap.clientHeight;
 		mapZoom();
 	}
 }
@@ -586,7 +643,7 @@ function showPictures() {
 		else content += "<div class='mySlides fade' style='display:none'>";
 		content += "<div class='numbertext'>";
 		content += (i+1)+" / "+squarePics.length+"</div>";
-		content += "<img src=db/images/"+squarePics[i].toLowerCase()+".gif style='display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
+		content += "<img src=db/images/"+squarePics[i].toLowerCase()+".gif style='max-width:100%;display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
 		content += "</div>";
 	}
 	content += "<a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
