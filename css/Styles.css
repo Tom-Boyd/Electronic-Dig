@@ -178,13 +178,29 @@ margin-right:1%;
 pointer-events:none
 }
 
+
+#modalEdit img {
+  display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 #modalEdit p {
 font-size:14px;
-margin:8px
+margin:8px;
+/*margin: 0px auto;*/
 }
 
 #modalEdit u {
 text-decoration:none
+}
+#modalEdit th, td {
+	padding: 5px;
+    margin: center;
+    background-color: #fefefe;
+    border: 1px solid #888;
+
 }
 
 #myModal {
@@ -697,7 +713,8 @@ table,th,td {
 border:1px solid #000;
 border-collapse:collapse;
 text-align: center;
-font-size:10px
+font-size:10px;
+margin: 0px auto;
 }
 
 to {
