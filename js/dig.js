@@ -105,11 +105,8 @@ $(window).resize(function() {
 //nav
 function navToggle() {
 	var element = document.getElementById("navDropdown");
-	console.log(element.style.display);
 	if (element.style.display == "none" || element.style.display == "") {
 		element.style.display = "block";
-		console.log("here");
-		console.log(element.style.display);
 	} else {
 		element.style.display = "none";
 	}
@@ -192,7 +189,6 @@ function getSquPics(code) { //Gets pictures of square
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 			squarePics = (this.response).split(",");
-			console.log(squarePics);
     }
   };
   xmlhttp.open("GET", "php/connection.php?codeSquPics=" + code, false);
@@ -217,11 +213,15 @@ function getData(code) { //Gets all info for square or feature
 						sqmoreTables = mTables;
 						sqpictures = pics;
 					} else {
+						console.log("feature");
 						feacontextTable = cTable;
 						feaartifactTable = aTable;
 						feaproperties = props;
 						feamoreTables = mTables;
 						feapictures = pics;
+						console.log(feaproperties);
+						console.log(props);
+						console.log(data[2]);
 					}
           update();
       }
@@ -240,30 +240,50 @@ function update() {
   var volume = document.getElementById("ajVolume");
   var area = document.getElementById("ajArea");
 	if (view == "square") {
-	  title.innerHTML = sqproperties[0];
-	  type.innerHTML = sqproperties[1];
-	  length.innerHTML = sqproperties[2];
-	  width.innerHTML = sqproperties[3];
-	  depth.innerHTML = sqproperties[4];
-	  area.innerHTML = sqproperties[5];
-	  volume.innerHTML = sqproperties[6];
+	  title.innerHTML = sqproperties[0] !== null ? sqproperties[0] : "Unavailable";
+	  type.innerHTML = sqproperties[1] !== null ? sqproperties[1] : "Unavailable";
+	  length.innerHTML = sqproperties[2] !== null ? sqproperties[2] : "Unavailable";
+	  width.innerHTML = sqproperties[3] !== null ? sqproperties[3] : "Unavailable";
+	  depth.innerHTML = sqproperties[4] !== null ? sqproperties[4] : "Unavailable";
+	  area.innerHTML = sqproperties[5] !== null ? sqproperties[5] : "Unavailable";
+	  volume.innerHTML = sqproperties[6] !== null ? sqproperties[6] : "Unavailable";
 	  generateCTable(sqcontextTable);
 	  generateATable(0,sqartifactTable,sqpictures);
 	} else {
-		title.innerHTML = feaproperties[0];
-	  type.innerHTML = feaproperties[1];
-	  length.innerHTML = feaproperties[2];
-	  width.innerHTML = feaproperties[3];
-	  depth.innerHTML = feaproperties[4];
-	  area.innerHTML = feaproperties[5];
-	  volume.innerHTML = feaproperties[6];
+		title.innerHTML = feaproperties[0] !== null ? feaproperties[0] : "Unavailable";
+	  type.innerHTML = feaproperties[1] !== null ? feaproperties[1] : "Unavailable";
+	  length.innerHTML = feaproperties[2] !== null ? feaproperties[2] : "Unavailable";
+	  width.innerHTML = feaproperties[3] !== null ? feaproperties[3] : "Unavailable";
+	  depth.innerHTML = feaproperties[4] !== null ? feaproperties[4] : "Unavailable";
+	  area.innerHTML = feaproperties[5] !== null ? feaproperties[5] : "Unavailable";
+	  volume.innerHTML = feaproperties[6] !== null ? feaproperties[6] : "Unavailable";
+		console.log(feaproperties[4]);
 		generateCTable(feacontextTable);
 		generateATable(0,feaartifactTable,feapictures);
 	}
 }
 
+//Highlights background of selected context
+function contextBackground(contextID) {
+	var allRows = document.getElementsByClassName("contextrow");
+	for (var i = 0; i < allRows.length; ++i) {
+		if (i == contextID) allRows[i].style.backgroundColor = "gray";
+		else allRows[i].style.backgroundColor = "";
+	}
+}
+
+//Truncate a string
+function truncate(string) {
+	var length = 10;
+	if (string.length > length) {
+		return string.substring(0,length) + "...";
+	}
+	return string;
+}
+
 //Creates artifact table
 function generateATable(contextID, artifactTable, pictures) {
+	contextBackground(contextID);
 	if (view != "square") {
 		artifactTable = feaartifactTable;
 		pictures = feapictures;
@@ -272,16 +292,16 @@ function generateATable(contextID, artifactTable, pictures) {
 		pictures = sqpictures;
 	}
   var aTable = document.getElementById("artifactTable");
-  var table = "<table id='artifactTableTable'><tr class='contextrow'>";
+  var table = "<table id='artifactTableTable'><tr class='artifactrow'>";
   table += "<th>Cat No.</th>";
   table += "<th>Artifacts</th>";
 	table += "<th>Picture</th>";
   table += "<th>More</th>";
   table += "</tr>";
   for (var i = 0; i < artifactTable[contextID].length-1; ++i) {
-    table += "<tr class='contextrow'>";
+    table += "<tr class='artifactrow'>";
     table += "<td>"+artifactTable[contextID][i][8]+"</td>";
-		table += "<td>"+artifactTable[contextID][i][3]+"</td>";
+		table += "<td>"+truncate(artifactTable[contextID][i][3])+"</td>";
 		var more = parseInt(artifactTable[contextID][i][9]);
 		if (more > 0){
 			if (pictures[(more-1)]){
@@ -308,7 +328,7 @@ function generateCTable(contextTable) {
   table += "<th>Photo</th>";
   table += "</tr>";
   for (var i = 0; i < contextTable.length; ++i) {
-    table += "<tr class='artifactrow' onclick='generateATable("+i+")'>";
+		table += "<tr class='contextrow' onclick='generateATable("+i+")'>";
     for (var z = 0; z < contextTable[i].length; ++z) {
       table += "<td>"+contextTable[i][z]+"</td>";
     }
@@ -517,9 +537,12 @@ function viewSquare(info){
 			section3.style.gridColumn = "1/4";
 		}
 		desc.style.display = "none";
-		featab.style.backgroundColor = "rgb(98, 98, 99)";
+		featab.style.display = "none";
 		maptab.style.pointerEvents = "auto";
-		squtab.style.backgroundColor = "RGB(181,139,114)";
+		squtab.style.display = "inline";
+		featab.style.color = "white";
+		maptab.style.color = "white";
+		squtab.style.color = "black";
 		artifacts.style.display = "inline";
 		map.style.display = "none";
 		square.style.display = "inline";
@@ -579,8 +602,11 @@ function viewMap() {
 		desc.style.display = "none";
 		maptab.style.pointerEvents = "none";
 		squtab.style.pointerEvents = "none";
-		featab.style.backgroundColor = "rgb(98, 98, 99)";
-		squtab.style.backgroundColor = "rgb(98, 98, 99)";
+		featab.style.display = "none";
+		squtab.style.display = "none";
+		featab.style.color = "white";
+		maptab.style.color = "black";
+		squtab.style.color = "white";
 		artifacts.style.display = "none";
 		map.style.display = "inline";
 		square.style.display = "none";
@@ -608,7 +634,10 @@ function viewFeature() {
 	var desc = document.getElementById("description");
 	desc.style.display = "block";
 	squtab.style.pointerEvents = "auto";
-	featab.style.backgroundColor = "RGB(181,139,114)";
+	featab.style.display = "inline";
+	featab.style.color = "black";
+	maptab.style.color = "white";
+	squtab.style.color = "white";
 	artifacts.style.display = "inline";
 	map.style.display = "none";
 
@@ -627,7 +656,7 @@ function showDescription() {
 		var modalPicts = document.getElementById('modalPics');
 		modalPicts.innerHTML = "";
 		//remove <a> tags
-		var content = data;
+		var content = "<h1>"+feaproperties[0]+"</h1>"+data.split("by H. Trawick Ward")[1];
 		while (content.includes("<a ")) {
 			var before = content.split("<a ")[0];
 			var split2 = content.split('">')[1];
@@ -655,37 +684,46 @@ function showPictures() {
 		if (i == 0) content += "<div class='mySlides fade' style='display:block'>";
 		else content += "<div class='mySlides fade' style='display:none'>";
 		content += "<div class='numbertext'>";
-		content += (i+1)+" / "+squarePics.length+"</div>";
+		content += (i)+" / "+squarePics.length+"</div>";
 		content += "<img src=db/images/"+squarePics[i].toLowerCase()+".gif style='max-width:100%;display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
 		content += "</div>";
 	}
 	content += "<a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
 	content += "<a class='next' onclick='plusSlides(1)'>&#10095;</a>";
-	content += "<div style='text-align:center'>"
-	for (var i = 0; i < squarePics.length; ++i) {
-		content += "<span class='dot' onclick='currentSlide("+(i+1)+")'></span>";
+	content += "<div style='text-align:center'>";
+		content += "<span class='dot' style='background-color:black' onclick='currentSlide("+0+")'></span>";
+	for (var i = 1; i < squarePics.length; ++i) {
+		content += "<span class='dot' onclick='currentSlide("+(i)+")'></span>";
 	}
 	content += "</div>";
 	modalPicts.innerHTML = content;
 	modalEdit.innerHTML = "";
 	modal.style.display = "block";
 }
-var slideIndex = 1;
+var slideIndex = 0;
 function currentSlide(n) {
-	showPic(slideIndex = n);
+	showPic(n);
 }
 function plusSlides(n) {
-	showPic(slideIndex += n);
+	showPic(slideIndex + n);
 }
 function showPic(n) {
+	console.log(slideIndex);
+	console.log(n);
 	var i;
 	var x = document.getElementsByClassName("mySlides");
-	if (n > x.length) {slideIndex = 1}
-	if (n < 1) {slideIndex = x.length}
-	for (i = 0; i < x.length; i++) {
-		 x[i].style.display = "none";
+	var dots = document.getElementsByClassName("dot");
+	console.log(x.length)
+	if (!(n >= x.length || n < 0)) {
+		console.log("accepted")
+		for (i = 0; i < x.length; i++) {
+			 x[i].style.display = "none";
+			 dots[i].style.backgroundColor = "#bbb";
+		}
+		x[n].style.display = "block";
+		dots[n].style.backgroundColor = "black";
+		slideIndex = n;
 	}
-	x[slideIndex-1].style.display = "block";
 }
 
 //When the user clicks on a square:
@@ -740,13 +778,20 @@ function feature(info) {
 			} else {
 				getCost(info);
 				var newBudget = budget;
-				if (cost <= newBudget) {
-					newBudget -= cost;
-					getData(info);
-					viewFeature();
-					updateBudget(newBudget);
-					featuredExcavated.push(info);
-					updateInfo("You have excavated a feature for "+formatBudget(cost),"green");
+				if (cost <= newBudget || isNaN(cost)) {
+					if (isNaN(cost)) {
+						getData(info);
+						viewFeature();
+						featuredExcavated.push(info);
+						updateInfo("You have excavated a feature for $0","green");
+					} else {
+						newBudget -= cost;
+						getData(info);
+						viewFeature();
+						updateBudget(newBudget);
+						featuredExcavated.push(info);
+						updateInfo("You have excavated a feature for "+formatBudget(cost),"green");
+					}
 				} else {
 					updateInfo("Not enough money to excavate!","red");
 				}
