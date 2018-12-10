@@ -38,6 +38,11 @@ margin: 16px;
 #tutorialText{
   text-align: justify;
 }
+#tutorialImg{
+  border-color: RGB(102,46,45);
+  border-style: solid;
+  border-width: 2px;
+}
 
 #tutorialRight{
   grid-column: 4/6;

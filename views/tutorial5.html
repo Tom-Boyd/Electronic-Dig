@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Electronic Dig</title>
-	<link rel="stylesheet" href="css/Styles.css">
+	<link rel="stylesheet" href="../css/Styles.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -14,15 +14,10 @@
 	<script src="js/dig.js"></script>
 	<nav>
 		<ul>
-			<li style="float:right;margin-right:16px;">Balance: <span id="budget"></span><span class="budgetAnim"></span></li>
+
 			<span id="fullNav">
 				<li><a href="https://rla.unc.edu/dig/" target="_blank" style="color:white;">Occaneechi Home</a></li>
-	      <li><a href="index.html" style="color:white;">Reset</a></li>
-				<li class="dropdown">
-			    <a class="dropbtn">&#9776;&nbsp;Help</i></a>
-			    <div class="dropdown-content">
-					<a>Tutorial</a>
-					<a href="https://electronicdig.gitbook.io/primer/" target= "_blank">Primer</a>
+
 			    </div>
 			  </li>
 			</span>
@@ -32,7 +27,6 @@
 					<div id="navDropdown">
 						<a>&nbsp;</a>
 						<a href="https://rla.unc.edu/dig/" target="_blank" style="color:white;">Occaneechi Home</a>
-						<a href="index.html" style="color:white;">Reset</a>
 						<a>Tutorial</a>
 						<a href="https://electronicdig.gitbook.io/primer/" target= "_blank">Primer</a>
 					</div>
@@ -45,39 +39,26 @@
 		</ul>
 	</nav>
 
-  <div id="main-container">
-  
+  <div id="tutorial-container">
 
-    <div id="mapbackground"></div>
-    <div id="sidebar">
-      <div id="map">
-        <h2 class="sideTitle">TOOLS</h2>
-        <div class="buttons" onclick="excavateSquare()">EXCAVATE</div>
-        <div class="buttons" onclick="deselect()">DESELECT</div>
-        <div class="buttons" onclick="random()">RANDOM</div>
-      </div>
-      <div id="info">
-        <h2 class="sideTitle" id="ajTitle"></h3>
-        <h4>Type: <span id="ajType"></span></h4>
-        <h4>Dimensions</h4>
-        <h5>  Length: <span id="ajLength"></span> ft</h5>
-        <h5>  Width: <span id="ajWidth"></span> ft</h5>
-        <h5>  Depth: <span id="ajDepth"></span> ft</h5>
-        <h5>Volume: <span id="ajVolume"></span> ft<sup>3</sup></h5>
-        <h5>Area: <span id="ajArea"></span> ft<sup>2</sup></h5>
-        <div class="buttons" onclick="showPictures()">IMAGES</div>
-        <div id="description" class="buttons" onclick="showDescription()">DESCRIPTION</div>
-      </div>
+
+    <div id="tutorialbackground">
+
+
+
+
+
+
     </div>
-		<div id="squareInfo">
-			<h2 class="sideTitle">Squares</h2>
-			<h5>SQUARES SELECTED</h5><div id="infoSelected">0</div><br>
-			<h5>SQUARES EXCAVATED</h5><div id="infoExcavated">0</div>
+		<div id="tutorialLeft">
+<p id="tutorialText">Click on the "Browse" tab in order to access information about the excavated squares and the features that have been exposed. To view a specific square, simply move the mouse pointer over it (the square name will appear under "Link to:") and click on it. A second way to view a square is to select it by name. This can be done by clicking the "Choose a context" button and selecting from the context list (you can also go directly to excavated features in this manner). Either method will take you to a "Master" page which contains more detailed information about the square. Here you can view a map, a photograph, and an inventory of all artifacts that were found while excavating that square. When you have finished viewing the "Master" page for a square (or feature), click on the "Map" button to return to the Electronic Dig screen.</p>
 		</div>
-    <div id="infoBox">
-			<h2 class="sideTitle">LOG</h2>
-			<div id="infoText"></div>
+		<div id="tutorialRight">
+	<img id="tutorialImg" src="../images/tut1.gif">
 		</div>
+<a id="prevButton" href="tutorial4.html" class="other-buttons">Previous</a>
+<a id="nextButton" href="tutorial6.html" class="other-buttons">Next</a>
+
     <div id="artifacts">
 			<h2 class="sideTitle">Contexts</h2>
 			<div id="contextTable">
