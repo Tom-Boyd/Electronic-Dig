@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var span = document.getElementsByClassName("close")[0];
   //When the user clicks on <span> (x), close the modal
   span.onclick = function() {	modal.style.display = "none";};
+
 	var svgMap = document.getElementById("svgMap");
 	svgMap.style.height = (svgMap.clientWidth * (15/13))+"px";
 	if ($(window).width() < 760){
@@ -691,7 +692,7 @@ function showPictures() {
 	content += "<a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
 	content += "<a class='next' onclick='plusSlides(1)'>&#10095;</a>";
 	content += "<div style='text-align:center'>";
-		content += "<span class='dot' style='background-color:black' onclick='currentSlide("+0+")'></span>";
+	content += "<span class='dot' style='background-color:black' onclick='currentSlide("+0+")'></span>";
 	for (var i = 1; i < pics.length; ++i) {
 		content += "<span class='dot' onclick='currentSlide("+(i)+")'></span>";
 	}
