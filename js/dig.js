@@ -183,12 +183,12 @@ function getCost(code) { //Gets cost of feature or square
   xmlhttp.open("GET", "php/connection.php?codeCost=" + code, false);
   xmlhttp.send();
 }
-var squarePics = [];
-function getSquPics(code) { //Gets pictures of square
+var pics = [];
+function getPics(code) { //Gets pictures of square
 	var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-			squarePics = (this.response).split(",");
+			pics = (this.response).split(",");
     }
   };
   xmlhttp.open("GET", "php/connection.php?codeSquPics=" + code, false);
@@ -571,7 +571,7 @@ function viewSquare(info){
 			hto = svgMap.clientWidth; //height
 			hfrom = svgMap.clientHeight; //height
 			mapZoom();
-			getSquPics(info);
+			getPics(info);
 		}
 	}
 }
@@ -642,10 +642,12 @@ function viewFeature() {
 	map.style.display = "none";
 
     var picLocation = document.getElementById("mapbackground");
-    $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif style='padding:20px;'>");
+    $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif style='padding:20px;display:block;margin-left: auto;margin-right:auto;'>");
 
 	var svgStyle = document.getElementById("svgMap");
 	svgStyle.style.display = "none";
+    
+    getPics(featureCode);
 }
 
 //Opens modal with description of feature
@@ -679,20 +681,27 @@ function showPictures() {
 	var modalEdit = document.getElementById('modalEdit');
 	var modalPicts = document.getElementById('modalPics');
 	var content = "<div class='slideshow-container'>"
-	content += "<h1 style='margin-top:20px'>"+sqproperties[0]+" Images</h1>";
-	for (var i = 0; i < squarePics.length; ++i) {
+    if (view == "square")
+    {
+        content += "<h1 style='margin-top:20px'>"+sqproperties[0]+" Images</h1>";    
+    }
+    else
+    {
+         content += "<h1 style='margin-top:20px'>"+feaproperties[0]+" Images</h1>";   
+    }
+	for (var i = 0; i < pics.length; ++i) {
 		if (i == 0) content += "<div class='mySlides fade' style='display:block'>";
 		else content += "<div class='mySlides fade' style='display:none'>";
 		content += "<div class='numbertext'>";
-		content += (i)+" / "+squarePics.length+"</div>";
-		content += "<img src=db/images/"+squarePics[i].toLowerCase()+".gif style='max-width:100%;display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
+		content += (i)+" / "+pics.length+"</div>";
+		content += "<img src=db/images/"+pics[i].toLowerCase()+".gif style='max-width:100%;display:block;margin-left:auto;margin-right:auto;max-height:390px'>";
 		content += "</div>";
 	}
 	content += "<a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
 	content += "<a class='next' onclick='plusSlides(1)'>&#10095;</a>";
 	content += "<div style='text-align:center'>";
 		content += "<span class='dot' style='background-color:black' onclick='currentSlide("+0+")'></span>";
-	for (var i = 1; i < squarePics.length; ++i) {
+	for (var i = 1; i < pics.length; ++i) {
 		content += "<span class='dot' onclick='currentSlide("+(i)+")'></span>";
 	}
 	content += "</div>";

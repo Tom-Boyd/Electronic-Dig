@@ -40,9 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     echo mysqli_fetch_array($query)[0];
   }
 
-  //Gets Images of square
-  if (isset($_GET["codeSquPics"])) {
-    $code = mysqli_real_escape_string($conn, $_GET["codeSquPics"]); //For security
+  //Gets Images of square/feature
+  if (isset($_GET["codeSquFeaPics"])) {
+    $code = mysqli_real_escape_string($conn, $_GET["codeSquFeaPics"]); //For security
     $sql = "SELECT pict FROM masterls WHERE UPPER(code) = '".$code."' limit 1";
     $query = $conn->query($sql);
     if (!$query) printf("Error: %s\n", mysqli_error($conn));
