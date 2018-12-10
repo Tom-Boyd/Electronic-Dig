@@ -28,6 +28,11 @@ grid-column: 1/6;
 grid-row: 1/6;
 }
 
+#tutorialhead{
+    grid-column: 3/5;
+    grid-row: 1;
+}
+
 #tutorialLeft{
 grid-column: 1/4;
 grid-row: 3;
