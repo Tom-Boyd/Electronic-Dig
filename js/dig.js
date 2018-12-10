@@ -191,7 +191,7 @@ function getPics(code) { //Gets pictures of square
 			pics = (this.response).split(",");
     }
   };
-  xmlhttp.open("GET", "php/connection.php?codeSquPics=" + code, false);
+  xmlhttp.open("GET", "php/connection.php?codeSquFeaPics=" + code, false);
   xmlhttp.send();
 }
 var sqcontextTable, sqartifactTable, sqproperties, sqmoreTables, sqpictures;
@@ -209,19 +209,16 @@ function getData(code) { //Gets all info for square or feature
 					if (view == "square") {
 						sqcontextTable = cTable;
 						sqartifactTable = aTable;
+						console.log("SQUARE");
 						sqproperties = props;
 						sqmoreTables = mTables;
 						sqpictures = pics;
 					} else {
-						console.log("feature");
 						feacontextTable = cTable;
 						feaartifactTable = aTable;
 						feaproperties = props;
 						feamoreTables = mTables;
 						feapictures = pics;
-						console.log(feaproperties);
-						console.log(props);
-						console.log(data[2]);
 					}
           update();
       }
@@ -257,7 +254,6 @@ function update() {
 	  depth.innerHTML = feaproperties[4] !== null ? feaproperties[4] : "Unavailable";
 	  area.innerHTML = feaproperties[5] !== null ? feaproperties[5] : "Unavailable";
 	  volume.innerHTML = feaproperties[6] !== null ? feaproperties[6] : "Unavailable";
-		console.log(feaproperties[4]);
 		generateCTable(feacontextTable);
 		generateATable(0,feaartifactTable,feapictures);
 	}
@@ -658,7 +654,7 @@ function showDescription() {
 		var modalPicts = document.getElementById('modalPics');
 		modalPicts.innerHTML = "";
 		//remove <a> tags
-		var content = "<h1>"+feaproperties[0]+"</h1>"+data.split("by H. Trawick Ward")[1];
+		var content = "<h1>"+feaproperties[0]+"</h1>"+data.split(data.split("<p>")[0])[1];
 		while (content.includes("<a ")) {
 			var before = content.split("<a ")[0];
 			var split2 = content.split('">')[1];
@@ -681,14 +677,8 @@ function showPictures() {
 	var modalEdit = document.getElementById('modalEdit');
 	var modalPicts = document.getElementById('modalPics');
 	var content = "<div class='slideshow-container'>"
-    if (view == "square")
-    {
-        content += "<h1 style='margin-top:20px'>"+sqproperties[0]+" Images</h1>";
-    }
-    else
-    {
-         content += "<h1 style='margin-top:20px'>"+feaproperties[0]+" Images</h1>";
-    }
+  if (view == "square") content += "<h1 style='margin-top:20px'>"+sqproperties[0]+" Images</h1>";
+  else content += "<h1 style='margin-top:20px'>"+feaproperties[0]+" Images</h1>";
 	for (var i = 0; i < pics.length; ++i) {
 		if (i == 0) content += "<div class='mySlides fade' style='display:block'>";
 		else content += "<div class='mySlides fade' style='display:none'>";
@@ -708,6 +698,7 @@ function showPictures() {
 	modalPicts.innerHTML = content;
 	modalEdit.innerHTML = "";
 	modal.style.display = "block";
+	slideIndex = 0;
 }
 var slideIndex = 0;
 function currentSlide(n) {
@@ -717,14 +708,10 @@ function plusSlides(n) {
 	showPic(slideIndex + n);
 }
 function showPic(n) {
-	console.log(slideIndex);
-	console.log(n);
 	var i;
 	var x = document.getElementsByClassName("mySlides");
 	var dots = document.getElementsByClassName("dot");
-	console.log(x.length)
 	if (!(n >= x.length || n < 0)) {
-		console.log("accepted")
 		for (i = 0; i < x.length; i++) {
 			 x[i].style.display = "none";
 			 dots[i].style.backgroundColor = "#bbb";
