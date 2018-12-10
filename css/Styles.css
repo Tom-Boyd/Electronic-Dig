@@ -37,7 +37,12 @@ grid-row: 3;
 padding: 15px;
 margin: 16px;
 }
-
+#tutorialRight{
+  grid-column: 4/6;
+  grid-row: 3;
+  padding: 15px;
+  margin: 16px;
+}
 #tutorialText{
   text-align: justify;
 }
@@ -47,17 +52,45 @@ margin: 16px;
   border-width: 2px;
 }
 
-#tutorialRight{
-  grid-column: 4/6;
-  grid-row: 3;
-  padding: 15px;
-  margin: 16px;
+#primerImg{
+  border-color: RGB(102,46,45);
+  border-style: solid;
+  border-width: 2px;
 }
 
 #primer {
 grid-column:1;
 grid-row:1
 }
+
+#primerLeft{
+grid-column: 1/4;
+grid-row: 3;
+padding: 15px;
+margin: 16px;
+}
+
+#primerRight{
+  grid-column: 4/6;
+  grid-row: 3;
+  padding: 15px;
+  margin: 16px;
+}
+#primer-container {
+display:grid;
+grid-template-columns:200px 200px 200px 200px;
+grid-template-rows:25px 10px 425px 60px auto;
+margin:32px auto auto;
+width:1000px;
+}
+#primer-container {
+grid-template-columns:200px 200px 200px 200px;
+grid-template-rows:25px 10px 425px 60px auto;
+width:760px;
+margin-top:89px;
+margin-bottom:32px;
+}
+
 
 #tutorial {
 grid-column:2;
