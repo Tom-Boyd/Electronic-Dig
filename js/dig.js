@@ -642,11 +642,11 @@ function viewFeature() {
 	map.style.display = "none";
 
     var picLocation = document.getElementById("mapbackground");
-    $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif id='featureimages' style='padding:20px;display:block;margin-left: auto;margin-right:auto;'>");
+    $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif id='featureimages' style='margin: 5px;width:calc(100% - 10px);display:block;'>");
 
 	var svgStyle = document.getElementById("svgMap");
 	svgStyle.style.display = "none";
-    
+
     getPics(featureCode);
 }
 
@@ -683,11 +683,11 @@ function showPictures() {
 	var content = "<div class='slideshow-container'>"
     if (view == "square")
     {
-        content += "<h1 style='margin-top:20px'>"+sqproperties[0]+" Images</h1>";    
+        content += "<h1 style='margin-top:20px'>"+sqproperties[0]+" Images</h1>";
     }
     else
     {
-         content += "<h1 style='margin-top:20px'>"+feaproperties[0]+" Images</h1>";   
+         content += "<h1 style='margin-top:20px'>"+feaproperties[0]+" Images</h1>";
     }
 	for (var i = 0; i < pics.length; ++i) {
 		if (i == 0) content += "<div class='mySlides fade' style='display:block'>";
