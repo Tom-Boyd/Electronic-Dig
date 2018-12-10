@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var span = document.getElementsByClassName("close")[0];
   //When the user clicks on <span> (x), close the modal
   span.onclick = function() {	modal.style.display = "none";};
-
+	var svgMap = document.getElementById("svgMap");
+	svgMap.style.height = (svgMap.clientWidth * (15/13))+"px";
 	if ($(window).width() < 760){
 		smallWindow = true;
 	} else {
@@ -76,7 +77,7 @@ window.addEventListener('wheel',function(){
 var smallWindow = false
 $(window).resize(function() {
 	var svgMap = document.getElementById("svgMap");
-	svgMap.style.height = svgMap.clientWidth * (15/13);
+	svgMap.style.height = (svgMap.clientWidth * (15/13))+"px";
   if ($(window).width() < 760){
 		smallWindow = true;
 		var section1 = document.getElementById("sidebar");
@@ -846,7 +847,7 @@ function excavateSquare() {
 					break;
 				}
 			}
-			selectedSquaresObj[i].firstChild.style.fill= "rgb(255, 255, 255,0)";
+			selectedSquaresObj[i].firstChild.style.fill= "rgba(255, 255, 255,0)";
 			excavatedSquares.push(selectedSquares[i]);
 			excavatedSquaresObj.push(selectedSquaresObj[i]);
 		}

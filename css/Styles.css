@@ -17,8 +17,6 @@ margin:32px auto auto;
 width:500px
 }
 
-
-
 #tutorialbackground {
 background-color: RGB(181,139,114);
 border-color: RGB(102,46,45);
@@ -332,8 +330,9 @@ display:none;
 grid-column:2 / 5;
 grid-row:2 / 5;
 margin:5px;
-overflow:hidden;
-width:calc(100%-10px);
+position:relative;
+overflow-y:hidden;
+width:calc(100% - 10px);
 z-index:1
 }
 
@@ -983,5 +982,9 @@ font-size: 15pt;
 }
 #subtitle {
 font-size: 15pt;
+}
+.sideTitle {
+font-size: 15px;
+line-height: 25px
 }
 }
