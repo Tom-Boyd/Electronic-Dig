@@ -305,14 +305,14 @@ function generateATable(contextID, artifactTable, pictures) {
 		var more = parseInt(artifactTable[contextID][i][9]);
 		if (more > 0){
 			if (pictures[(more-1)]){
-				table += "<td>Yes</td>";
+				table += "<td><img style='height:15px' src='../images/cam.png'></td>";
 			} else {
-				table += "<td>No</td>";
+				table += "<td></td>";
 			}
 			table += "<td><button onclick='more("+(more-1)+")'>More</button></td>";
 		} else {
-			table += "<td>No</td>";
-			table += "<td>No</td>";
+			table += "<td></td>";
+			table += "<td></td>";
 		}
     table += "</tr>";
   }
@@ -642,7 +642,7 @@ function viewFeature() {
 	map.style.display = "none";
 
     var picLocation = document.getElementById("mapbackground");
-    $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif style='padding:20px;display:block;margin-left: auto;margin-right:auto;'>");
+    $(picLocation).empty().append("<img src=db/images/" + featureCode + ".gif id='featureimages' style='padding:20px;display:block;margin-left: auto;margin-right:auto;'>");
 
 	var svgStyle = document.getElementById("svgMap");
 	svgStyle.style.display = "none";
