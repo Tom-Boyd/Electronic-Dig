@@ -94,7 +94,7 @@ stroke-width:0.2!important
 #artifactTable {
 display:inline-block;
 margin:16px auto auto;
-max-height:298px;
+max-height:331px;
 overflow-y:auto;
 position:relative;
 width:90%
@@ -112,7 +112,7 @@ text-align:center
 #contextTable {
 display:inline-block;
 margin:16px auto auto;
-max-height:150px;
+max-height:152px;
 overflow-y:auto;
 position:relative;
 width:90%
