@@ -194,7 +194,7 @@ width:10%
 #main-container {
 display:grid;
 grid-template-columns:240px 173.3px 173.3px 173.3px 240px;
-grid-template-rows:25px 292px 100px 200px;
+grid-template-rows:25px 292px 100px 205px;
 margin:32px auto auto;
 width:1000px
 }
@@ -818,7 +818,7 @@ margin:8px 0 8px 0
 }
 #main-container {
 grid-template-columns:240px 173.3px 173.3px 173.3px;
-grid-template-rows:25px 292px 100px 200px auto;
+grid-template-rows:25px 292px 100px 205px auto;
 width:760px;
 margin-top:89px;
 margin-bottom:32px;
