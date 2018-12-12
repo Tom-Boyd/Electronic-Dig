@@ -507,6 +507,7 @@ function showGrid() {
 }
 
 //These 3 functions can show the 3 different views
+var prevcode = "";
 function viewSquare(info){
 	if (!zooming) {
 		var wasFeature = false;
@@ -515,6 +516,7 @@ function viewSquare(info){
 		}
 		view = "square";
 		if (wasFeature) {
+			getPics(prevcode);
 			update();
 			var svgStyle = document.getElementById("svgMap");
 			svgStyle.style.display = "inline";
@@ -570,6 +572,7 @@ function viewSquare(info){
 			hfrom = svgMap.clientHeight; //height
 			mapZoom();
 			getPics(info);
+			prevcode = info;
 		}
 	}
 }
